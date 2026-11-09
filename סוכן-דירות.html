@@ -1,0 +1,414 @@
+<title>סוכן דירות</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: header band with criteria, then a two-column desk: search panel at the side, listing cards in the main column; one column on phones. */
+:root{
+  --bg:#f4f6f5; --surface:#ffffff; --sunk:#e9eeec; --line:#d3dcd8;
+  --ink:#14302a; --muted:#5b6f69; --accent:#0e5a73; --accent-ink:#ffffff;
+  --gold:#a8670f; --good:#1f7a43; --good-bg:#e1f2e7; --warn:#a14a0b; --warn-bg:#fbeadb; --bad:#a52a2a;
+  --display:"Suez One","Assistant",Georgia,serif;
+  --body:"Assistant","Segoe UI",Arial,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1715; --surface:#16211e; --sunk:#1c2925; --line:#2c3c37;
+  --ink:#e4eeea; --muted:#9bb0a9; --accent:#5fb4d0; --accent-ink:#06222c;
+  --gold:#e0a54a; --good:#6fd39a; --good-bg:#173226; --warn:#f0a066; --warn-bg:#35231a; --bad:#f08a8a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#16211e; --sunk:#1c2925; --line:#2c3c37;
+  --ink:#e4eeea; --muted:#9bb0a9; --accent:#5fb4d0; --accent-ink:#06222c;
+  --gold:#e0a54a; --good:#6fd39a; --good-bg:#173226; --warn:#f0a066; --warn-bg:#35231a; --bad:#f08a8a; color-scheme:dark}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;direction:rtl;text-align:right}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.band{background:var(--surface);border-bottom:1px solid var(--line)}
+header .wrap{padding-block:22px 18px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+h1{font-family:var(--display);font-weight:400;font-size:2.1rem;margin:0;line-height:1.1;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--sunk);border-radius:999px;padding:3px 12px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.desk{display:grid;grid-template-columns:330px minmax(0,1fr);gap:22px;padding-block:22px 48px}
+@media (max-width:860px){.desk{grid-template-columns:minmax(0,1fr)}}
+aside{display:flex;flex-direction:column;gap:18px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.panel h2{font-family:var(--display);font-weight:400;font-size:1.2rem;margin:0 0 12px}
+label.f{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+.form{display:flex;flex-direction:column;gap:14px}
+input[type=text],input[type=number],select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+textarea{min-height:60px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+fieldset legend{font-weight:600;font-size:.9rem;margin-bottom:6px;padding:0}
+.tog{position:relative}
+.tog input{position:absolute;opacity:0;inset:0}
+.tog span{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.9rem;background:var(--bg)}
+.tog input:checked+span{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tog input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;font-weight:600}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);padding:10px 16px;font-size:1rem}
+button:disabled{opacity:.55;cursor:default}
+.note{font-size:.88rem;color:var(--muted)}
+.callout{border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;font-size:.9rem;background:var(--sunk)}
+.callout b{color:var(--accent)}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hist li{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:8px;font-size:.9rem}
+.hist li:last-child{border-bottom:0}
+.pill{font-size:.75rem;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pill.wait{background:var(--warn-bg);color:var(--warn)}
+.pill.done{background:var(--good-bg);color:var(--good)}
+main{min-width:0;display:flex;flex-direction:column;gap:16px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.toolbar label.f{flex:1 1 150px;min-width:0}
+.market{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.stat .k{font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.stat .v{font-family:var(--display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.stat .s{font-size:.8rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+@media (max-width:420px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-width:0}
+.card.fav{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.card.rej{opacity:.5}
+.ch{padding:14px 16px 10px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--sunk);color:var(--muted)}
+.tag.new{background:var(--accent);color:var(--accent-ink)}
+.tag.good{background:var(--good-bg);color:var(--good)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.addr{font-weight:800;font-size:1.05rem;margin:0}
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.price .big{font-family:var(--display);font-size:1.55rem;font-variant-numeric:tabular-nums}
+.price .psm{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+dl.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0}
+dl.specs div{padding:9px 12px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);min-width:0}
+dl.specs div:nth-child(3n){border-left:0}
+dt{font-size:.75rem;color:var(--muted);font-weight:600}
+dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+dd.unk{color:var(--muted);font-weight:400;font-style:italic}
+.cb{padding:12px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.hist-price{font-size:.88rem}
+.hist-price ol{margin:4px 0 0;padding:0 18px 0 0}
+.contact{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.92rem}
+.phone{font-weight:800;direction:ltr;unicode-bidi:isolate;user-select:all;font-variant-numeric:tabular-nums}
+.cf{padding:10px 16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.cf a{color:var(--accent);font-weight:700}
+.marks{display:flex;gap:6px}
+.marks button{padding:4px 10px;font-size:.85rem}
+.marks button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:28px 22px;display:flex;flex-direction:column;gap:10px}
+.empty h3{font-family:var(--display);font-weight:400;margin:0;font-size:1.3rem}
+.empty ol{margin:0;padding-right:20px}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.88rem}
+.links a{color:var(--accent);font-weight:600}
+.status{font-size:.88rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.card{transition:opacity .2s}}
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <div>
+      <h1>סוכן דירות</h1>
+      <p class="sub">דירות למכירה, יד שנייה, חדשות ובבנייה, לפי האזור שתבחר</p>
+    </div>
+    <div class="chips" id="critChips" aria-label="קריטריונים פעילים">
+      <span class="chip">4–5 חדרים</span>
+      <span class="chip">עד ‎₪6,000,000</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap desk">
+  <aside>
+    <section class="panel" aria-labelledby="h-search">
+      <h2 id="h-search">חיפוש חדש</h2>
+      <form class="form" id="searchForm" novalidate>
+        <label class="f" for="area">אזור, עיר או שכונה
+          <input type="text" id="area" placeholder="לדוגמה: מודיעין, שכונת מורשת" required>
+        </label>
+        <fieldset>
+          <legend>מספר חדרים</legend>
+          <label class="tog"><input type="checkbox" id="r4" value="4" checked><span>4 חדרים</span></label>
+          <label class="tog"><input type="checkbox" id="r5" value="5" checked><span>5 חדרים</span></label>
+        </fieldset>
+        <label class="f" for="budget">תקציב מקסימלי (₪)
+          <input type="number" id="budget" value="6000000" step="50000" min="0" inputmode="numeric">
+        </label>
+        <fieldset>
+          <legend>סוג נכס</legend>
+          <label class="tog"><input type="checkbox" id="tUsed" value="יד שנייה" checked><span>יד שנייה</span></label>
+          <label class="tog"><input type="checkbox" id="tNew" value="חדש מקבלן" checked><span>חדש מקבלן</span></label>
+          <label class="tog"><input type="checkbox" id="tBuild" value="בבנייה" checked><span>בבנייה / על הנייר</span></label>
+        </fieldset>
+        <label class="f" for="extra">דרישות נוספות (לא חובה)
+          <textarea id="extra" placeholder="מרפסת, מעלית, קומה גבוהה, ליד בית ספר..."></textarea>
+        </label>
+        <button class="primary" type="submit" id="submitBtn">שלח בקשת חיפוש</button>
+        <p class="status" id="formStatus" role="status"></p>
+      </form>
+      <div class="callout" id="howTo" hidden>
+        הבקשה נשמרה. עכשיו כתוב לי בצ'אט <b>"חפש"</b>. אני אחפש מודעות, אכניס אותן לכאן והן יופיעו בעמוד הזה.
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="h-hist">
+      <h2 id="h-hist">בקשות חיפוש</h2>
+      <ul class="hist" id="histList"><li class="note">עדיין אין בקשות.</li></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="h-tools">
+      <h2 id="h-tools">בדיקה עצמית</h2>
+      <p class="note">מחירי עסקאות אמת (רשות המסים) ומודעות מקוריות:</p>
+      <div class="links" id="extLinks">
+        <a href="https://www.nadlan.gov.il/" target="_blank" rel="noopener">נדל"ן ממשלתי (עסקאות)</a>
+        <a href="https://www.madlan.co.il/" target="_blank" rel="noopener">מדלן</a>
+        <a href="https://www.yad2.co.il/realestate/forsale" target="_blank" rel="noopener">יד2</a>
+        <a href="https://www.yad2.co.il/realestate/new-projects" target="_blank" rel="noopener">יד2 פרויקטים חדשים</a>
+      </div>
+    </section>
+  </aside>
+
+  <main>
+    <div class="market" id="market" aria-live="polite"></div>
+
+    <div class="toolbar">
+      <label class="f" for="fArea">אזור
+        <select id="fArea"><option value="">כל האזורים</option></select>
+      </label>
+      <label class="f" for="fType">סוג
+        <select id="fType">
+          <option value="">הכל</option>
+          <option>יד שנייה</option><option>חדש מקבלן</option><option>בבנייה</option>
+        </select>
+      </label>
+      <label class="f" for="fBroker">תיווך
+        <select id="fBroker">
+          <option value="">הכל</option><option value="no">ללא תיווך</option><option value="yes">בתיווך</option>
+        </select>
+      </label>
+      <label class="f" for="fSort">מיון
+        <select id="fSort">
+          <option value="psm">מחיר למ"ר, מהנמוך</option>
+          <option value="price">מחיר, מהנמוך</option>
+          <option value="sqm">שטח, מהגדול</option>
+          <option value="date">מודעה, מהחדשה</option>
+          <option value="age">בניין, מהחדש</option>
+        </select>
+      </label>
+      <label class="f" for="fMark">הצג
+        <select id="fMark">
+          <option value="">הכל חוץ מנפסלו</option><option value="fav">מועדפים בלבד</option><option value="all">הכל כולל נפסלו</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="cards" class="cards" aria-live="polite"></div>
+    <div id="empty" class="empty">
+      <h3>עדיין אין דירות להצגה</h3>
+      <ol>
+        <li>מלא את האזור בטופס "חיפוש חדש" ושלח.</li>
+        <li>כתוב לי בצ'אט "חפש".</li>
+        <li>הדירות שאמצא יופיעו כאן עם מחיר, מחיר למ"ר, שטח, מרפסת, מחסן, חניה, ותק, תיווך, טלפון, תאריך מודעה והיסטוריית מחיר.</li>
+      </ol>
+      <p class="note" id="dbNote">שדה שלא מופיע במודעה יסומן "לא צוין". חשוב לאמת כל פרט מול המודעה עצמה.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const nf = new Intl.NumberFormat('he-IL');
+  const money = n => (n || n === 0) ? '₪' + nf.format(Math.round(n)) : null;
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const today = new Date();
+  let listings = [], searches = [], areas = [], db = null;
+
+  function yesNo(v, extra){
+    if (v === true) return extra ? 'יש (' + extra + ')' : 'יש';
+    if (v === false) return 'אין';
+    return null;
+  }
+  function daysSince(d){
+    if (!d) return null;
+    const t = new Date(d); if (isNaN(t)) return null;
+    return Math.max(0, Math.round((today - t) / 864e5));
+  }
+  function psm(l){ return (l.price && l.sqm) ? l.price / l.sqm : null; }
+  function cityOf(l){ return l.city || 'ללא אזור'; }
+
+  function spec(label, val){
+    const unk = val === null || val === undefined || val === '';
+    return '<div><dt>' + label + '</dt><dd class="' + (unk ? 'unk' : '') + '">' + (unk ? 'לא צוין' : esc(val)) + '</dd></div>';
+  }
+
+  function avgByCity(){
+    const m = {};
+    listings.forEach(l => { const p = psm(l); if (!p) return; const c = cityOf(l); (m[c] = m[c] || []).push(p); });
+    const out = {}; Object.keys(m).forEach(c => out[c] = m[c].reduce((a,b)=>a+b,0) / m[c].length);
+    return out;
+  }
+
+  function renderMarket(list){
+    const box = $('#market');
+    if (!list.length){ box.innerHTML = ''; return; }
+    const prices = list.map(l => l.price).filter(Boolean);
+    const psms = list.map(psm).filter(Boolean);
+    const avg = a => a.reduce((x,y)=>x+y,0) / a.length;
+    const sel = $('#fArea').value;
+    const area = areas.find(a => a.name === sel) || (areas.length === 1 ? areas[0] : null);
+    let html = '';
+    html += '<div class="stat"><div class="k">דירות שנמצאו</div><div class="v">' + list.length + '</div><div class="s">לפי הסינון הנוכחי</div></div>';
+    if (prices.length) html += '<div class="stat"><div class="k">טווח מחירים</div><div class="v">' + money(Math.min(...prices)).replace('₪','₪') + '</div><div class="s">עד ' + money(Math.max(...prices)) + '</div></div>';
+    if (psms.length) html += '<div class="stat"><div class="k">ממוצע מחיר למ"ר במודעות</div><div class="v">' + money(avg(psms)) + '</div><div class="s">מחיר מבוקש, לא מחיר עסקה</div></div>';
+    if (area && area.avgDealSqm) html += '<div class="stat"><div class="k">עסקאות בפועל, ' + esc(area.name) + '</div><div class="v">' + money(area.avgDealSqm) + '</div><div class="s">למ"ר · ' + esc(area.dealsNote || area.dealsSource || '') + '</div></div>';
+    box.innerHTML = html;
+  }
+
+  function card(l, cityAvg){
+    const p = psm(l);
+    const avg = cityAvg[cityOf(l)];
+    const tags = [];
+    tags.push('<span class="tag' + (l.type && l.type !== 'יד שנייה' ? ' new' : '') + '">' + esc(l.type || 'סוג לא צוין') + '</span>');
+    if (l.rooms) tags.push('<span class="tag">' + esc(l.rooms) + ' חד׳</span>');
+    if (l.broker === false) tags.push('<span class="tag good">ללא תיווך</span>');
+    if (l.broker === true) tags.push('<span class="tag">בתיווך</span>');
+    if (p && avg && Object.keys(cityAvg).length && listings.filter(x=>cityOf(x)===cityOf(l)&&psm(x)).length >= 3){
+      const d = (p - avg) / avg;
+      if (d <= -0.07) tags.push('<span class="tag good">' + Math.round(-d*100) + '% מתחת לממוצע למ"ר</span>');
+      else if (d >= 0.1) tags.push('<span class="tag warn">' + Math.round(d*100) + '% מעל הממוצע למ"ר</span>');
+    }
+    const ph = Array.isArray(l.priceHistory) ? l.priceHistory.filter(h => h && h.price) : [];
+    if (ph.length >= 1){
+      const first = ph[0].price;
+      if (l.price && first > l.price) tags.push('<span class="tag good">המחיר ירד ' + money(first - l.price) + '</span>');
+      if (l.price && first < l.price) tags.push('<span class="tag warn">המחיר עלה ' + money(l.price - first) + '</span>');
+    }
+    const days = daysSince(l.listedAt);
+    const age = l.buildYear ? (today.getFullYear() - l.buildYear) : null;
+    const ageTxt = l.buildYear ? (age <= 0 ? 'חדש (' + l.buildYear + ')' : age + ' שנים (' + l.buildYear + ')') : (l.buildAge || null);
+    const addr = [l.street, l.neighborhood, l.city].filter(Boolean).join(', ') || 'כתובת לא צוינה';
+    const balcony = l.balcony === true && l.balconySqm ? 'יש, ' + l.balconySqm + ' מ"ר' : yesNo(l.balcony);
+    const parking = (typeof l.parking === 'number') ? (l.parking === 0 ? 'אין' : l.parking) : (l.parking || null);
+    const listedTxt = l.listedAt ? (new Date(l.listedAt).toLocaleDateString('he-IL') + (days !== null ? ' · ' + days + ' ימים' : '')) : null;
+
+    let histHtml = '';
+    if (ph.length){
+      histHtml = '<div class="hist-price"><b>היסטוריית מחיר:</b><ol>' + ph.map(h => '<li>' + esc(h.date ? new Date(h.date).toLocaleDateString('he-IL') : '') + ' · ' + money(h.price) + '</li>').join('') + (l.price ? '<li>היום · ' + money(l.price) + '</li>' : '') + '</ol></div>';
+    } else {
+      histHtml = '<div class="hist-price note">היסטוריית מחיר בחצי השנה האחרונה: לא נמצא מידע.</div>';
+    }
+    let contact = '<div class="contact">';
+    if (l.phone){
+      contact += '<span>' + esc(l.contactName || 'איש קשר') + ':</span><span class="phone">' + esc(l.phone) + '</span><button type="button" data-copy="' + esc(l.phone) + '">העתק</button>';
+    } else {
+      contact += '<span class="note">טלפון: מוצג רק במודעה עצמה (לחיצה על "הצג מספר")</span>';
+    }
+    contact += '</div>';
+    const mark = l.mark || '';
+    return '<article class="card' + (mark==='fav'?' fav':'') + (mark==='rej'?' rej':'') + '">' +
+      '<div class="ch"><div class="tags">' + tags.join('') + '</div><p class="addr">' + esc(addr) + '</p>' +
+      '<div class="price"><span class="big">' + (money(l.price) || 'מחיר לא צוין') + '</span>' + (p ? '<span class="psm">' + money(p) + ' למ"ר</span>' : '') + '</div></div>' +
+      '<dl class="specs">' +
+        spec('שטח', l.sqm ? l.sqm + ' מ"ר' : null) + spec('קומה', l.floor ?? null) + spec('מרפסת', balcony) +
+        spec('מחסן', yesNo(l.storage)) + spec('חניות', parking) + spec('ותק בניין', ageTxt) +
+        spec('תיווך', l.broker === true ? 'כן' : l.broker === false ? 'לא' : null) + spec('במודעה מאז', listedTxt) + spec('מסירה', l.delivery || null) +
+      '</dl>' +
+      '<div class="cb">' + histHtml + contact + (l.notes ? '<p class="note" style="margin:0">' + esc(l.notes) + '</p>' : '') + '</div>' +
+      '<div class="cf">' + (l.url ? '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">למודעה ב' + esc(l.source || 'אתר') + '</a>' : '<span class="note">' + esc(l.source || '') + '</span>') +
+      '<div class="marks" role="group" aria-label="סימון">' +
+        '<button type="button" data-mark="fav" data-id="' + esc(l.id) + '" aria-pressed="' + (mark==='fav') + '">מועדף</button>' +
+        '<button type="button" data-mark="rej" data-id="' + esc(l.id) + '" aria-pressed="' + (mark==='rej') + '">נפסל</button>' +
+      '</div></div></article>';
+  }
+
+  function render(){
+    // area filter options
+    const cities = [...new Set(listings.map(cityOf))].sort();
+    const fa = $('#fArea'), cur = fa.value;
+    fa.innerHTML = '<option value="">כל האזורים</option>' + cities.map(c => '<option' + (c===cur?' selected':'') + '>' + esc(c) + '</option>').join('');
+    const fType = $('#fType').value, fBroker = $('#fBroker').value, fSort = $('#fSort').value, fMark = $('#fMark').value;
+    let list = listings.filter(l =>
+      (!fa.value || cityOf(l) === fa.value) &&
+      (!fType || l.type === fType) &&
+      (!fBroker || (fBroker === 'yes' ? l.broker === true : l.broker === false)) &&
+      (fMark === 'all' ? true : fMark === 'fav' ? l.mark === 'fav' : l.mark !== 'rej'));
+    const big = 1e15;
+    const sorters = {
+      psm: (a,b) => (psm(a) ?? big) - (psm(b) ?? big),
+      price: (a,b) => (a.price ?? big) - (b.price ?? big),
+      sqm: (a,b) => (b.sqm ?? 0) - (a.sqm ?? 0),
+      date: (a,b) => (new Date(b.listedAt || 0)) - (new Date(a.listedAt || 0)),
+      age: (a,b) => (b.buildYear ?? 0) - (a.buildYear ?? 0)
+    };
+    list.sort(sorters[fSort]);
+    const cityAvg = avgByCity();
+    $('#cards').innerHTML = list.map(l => card(l, cityAvg)).join('');
+    $('#empty').hidden = listings.length > 0;
+    if (listings.length && !list.length) $('#cards').innerHTML = '<p class="note">אין דירות שתואמות לסינון.</p>';
+    renderMarket(list);
+  }
+
+  function renderHist(){
+    const ul = $('#histList');
+    if (!searches.length){ ul.innerHTML = '<li class="note">עדיין אין בקשות.</li>'; return; }
+    const s = [...searches].sort((a,b) => String(b.createdAt||'').localeCompare(String(a.createdAt||'')));
+    ul.innerHTML = s.map(r => '<li><span><b>' + esc(r.area) + '</b><br><span class="note">' + esc((r.rooms||[]).join('/')) + ' חד׳ · עד ' + esc(money(r.budget) || '') + '</span></span>' +
+      (r.status === 'done' ? '<span class="pill done">' + (r.resultCount ?? '') + ' תוצאות</span>' : '<span class="pill wait">ממתין לחיפוש</span>') + '</li>').join('');
+  }
+
+  ['#fArea','#fType','#fBroker','#fSort','#fMark'].forEach(id => $(id).addEventListener('change', render));
+
+  document.addEventListener('click', async e => {
+    const c = e.target.closest('[data-copy]');
+    if (c){
+      try { await navigator.clipboard.writeText(c.dataset.copy); c.textContent = 'הועתק'; }
+      catch(_){ const r = document.createRange(); r.selectNodeContents(c.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); c.textContent = 'סומן להעתקה'; }
+      setTimeout(() => c.textContent = 'העתק', 1800);
+      return;
+    }
+    const m = e.target.closest('[data-mark]');
+    if (m && db){
+      const l = listings.find(x => x.id === m.dataset.id); if (!l) return;
+      const next = l.mark === m.dataset.mark ? '' : m.dataset.mark;
+      l.mark = next; render();
+      try { await db.collection('listings').doc(l.id).update({ mark: next }); }
+      catch(err){ $('#dbNote').textContent = 'הסימון לא נשמר: ' + (err && err.message || 'אין הרשאת כתיבה'); }
+    }
+  });
+
+  $('#searchForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const area = $('#area').value.trim();
+    const st = $('#formStatus');
+    if (!area){ st.textContent = 'כתוב אזור, עיר או שכונה.'; $('#area').focus(); return; }
+    const rooms = ['#r4','#r5'].map(s => $(s)).filter(x => x.checked).map(x => Number(x.value));
+    const types = ['#tUsed','#tNew','#tBuild'].map(s => $(s)).filter(x => x.checked).map(x => x.value);
+    if (!rooms.length || !types.length){ st.textContent = 'בחר לפחות מספר חדרים אחד וסוג נכס אחד.'; return; }
+    if (!db){ st.textContent = 'השמירה לא זמינה כרגע. כתוב לי בצ\'אט את האזור ואחפש ידנית.'; return; }
+    $('#submitBtn').disabled = true; st.textContent = 'שומר...';
+    try {
+      const id = 's' + Date.now();
+      await db.collection('searches').doc(id).set({ area, rooms, budget: Number($('#budget').value) || 6000000, types, extra: $('#extra').value.trim(), status: 'pending', createdAt: new Date().toISOString() });
+      st.textContent = ''; $('#howTo').hidden = false;
+    } catch(err){
+      st.textContent = 'הבקשה לא נשמרה: ' + (err && err.message || 'שגיאה') + '. אפשר לכתוב לי את האזור בצ\'אט.';
+    } finally { $('#submitBtn').disabled = false; }
+  });
+
+  render();
+
+  (async () => {
+    if (!window.claude || !window.claude.use){ $('#dbNote').textContent = 'העמוד פתוח מחוץ ל-Claude, לכן אין חיבור לנתונים.'; return; }
+    db = await window.claude.use('db');
+    if (!db){ $('#dbNote').textContent = 'אין חיבור לנתונים. התחבר ל-Claude כדי לראות את הדירות.'; return; }
+    const timer = setTimeout(() => { $('#dbNote').textContent = 'הטעינה מתעכבת. נסה לרענן מאוחר יותר.'; }, 10000);
+    db.collection('listings').onSnapshot(snap => { clearTimeout(timer); listings = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); render(); },
+      err => { clearTimeout(timer); $('#dbNote').textContent = 'שגיאה בטעינת דירות: ' + err.message; });
+    db.collection('searches').onSnapshot(snap => { searches = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); renderHist(); }, () => {});
+    db.collection('areas').onSnapshot(snap => { areas = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); render(); }, () => {});
+  })();
+})();
+</script>
