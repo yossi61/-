@@ -148,6 +148,15 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </header>
 
   <div class="switch" role="group" aria-label="בחירת מבצע">
+    <div class="sw-item" data-item="deal-mouse">
+      <button type="button" class="sw-pick" data-deal="deal-mouse" aria-pressed="false"><span class="sw-name">עכבר Logitech MX Master 2S</span><span class="sw-meta num">חלופה מ־₪279 · 3/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-mouse" aria-label="מחיקת עכבר Logitech MX Master 2S" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-mouse">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
     <div class="sw-item" data-item="deal-bp">
       <button type="button" class="sw-pick" data-deal="deal-bp" aria-pressed="false"><span class="sw-name">מד לחץ דם Omron M7</span><span class="sw-meta num">מ־₪549 · 7/10</span></button>
       <button type="button" class="sw-del" data-del="deal-bp" aria-label="מחיקת מד לחץ דם Omron M7" title="מחיקה">✕</button>
@@ -183,6 +192,150 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   <div class="empty" id="empty" hidden>
     <h2>אין מוצרים ברשימה</h2>
     <p>מחקת את כל המוצרים שנבדקו. אפשר לשחזר אותם בכפתור שלמעלה, או לשלוח לי מבצע חדש לבדיקה.</p>
+  </div>
+
+  <div class="dealview" id="deal-mouse" hidden>
+  <div class="product">
+    <div>
+      <h2>עכבר Logitech MX Master 2S</h2>
+      <div class="meta">זוהה מהצילום: לוגו "logi", גלגלת מתכת, כפתור קטן מאחורי הגלגלת ומשענת אגודל · הדגם הופסק · אין מבצע, חיפוש המחיר הטוב ביותר</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪279</div>
+      <div class="was" style="text-decoration:none">החלופה הזולה: MX Master 3S</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="ms-t-rec" aria-controls="ms-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="ms-t-cmp" aria-controls="ms-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="ms-t-fine" aria-controls="ms-p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <section class="panel" id="ms-p-rec" role="tabpanel" aria-labelledby="ms-t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות לקניית MX Master 2S: 3 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--amber)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="184.7"/>
+        </svg>
+        <div class="score"><div><b class="num" style="color:var(--amber)">3</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill" style="background:var(--amber)">לחפש חלופה: MX Master 3S</div>
+        <p>Logitech הפסיקה לייצר את ה־MX Master 2S. ההצעה היחידה שמצאתי בישראל היא <b>531 ₪</b> (דוריקו דרך זאפ, דף בלי תאריך). זה יותר מהדגמים החדשים. הדגם שהחליף אותו, <b>MX Master 3S</b>, נמכר ב<b>אייבורי ב־279 ₪</b> במבצע (במקום 359 ₪), ובבאג וב־KSP ב־339 ₪. ל־3S יש חיישן מדויק יותר (8000 DPI), קליקים שקטים יותר וגלגלת MagSpeed מהירה יותר, והצורה שלו כמעט זהה.</p>
+        <div class="alts"><span>הגרסה החדשה ביותר: MX Master 4, ‏408–468 ₪</span><span>להמתין: לא נדרש, ה־3S כבר במבצע</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון ב־3S מול ה־2S</div><div class="v c-lime num">₪252</div><div class="s">279 ₪ מול 531 ₪, ובדגם חדש יותר</div></div>
+      <div class="stat"><div class="k">MX Master 3S במחיר רגיל</div><div class="v c-cyan num">₪339</div><div class="s">באג (Bluetooth בלבד) · KSP (אזל מהמלאי)</div></div>
+      <div class="stat"><div class="k">MX Master 4 (הדור החדש)</div><div class="v c-amber num">₪408+</div><div class="s">מחיר מומלץ 499 ₪</div></div>
+    </div>
+
+    <div class="box">
+      <h3>טווח המחירים בישראל</h3>
+      <div class="range" role="img" aria-label="טווח מחירים מ-279 שקל ל-MX Master 3S עד 531 שקל ל-MX Master 2S">
+        <!-- scale: 250 to 550 ILS mapped to 0-100% (LTR) -->
+        <div class="mark deal" style="left:9.7%"><span class="lbl up">3S ‏₪279</span></div>
+        <div class="mark" style="left:29.7%"><span class="lbl dn">3S ‏₪339</span></div>
+        <div class="mark" style="left:52.7%"><span class="lbl up">4 ‏₪408</span></div>
+        <div class="mark" style="left:72.7%"><span class="lbl dn">4 ‏₪468</span></div>
+        <div class="mark" style="left:93.7%"><span class="lbl up">2S ‏₪531</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא מצאתי נתוני היסטוריית מחירים מאומתים לדגמים האלה, ולכן אין כאן גרף. לא ידוע גם עד מתי המבצע באייבורי בתוקף.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="ms-p-cmp" role="tabpanel" aria-labelledby="ms-t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות</th><th>דגם</th><th>מחיר</th><th>משלוח ואחריות</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr class="best">
+            <td><a href="https://www.ivory.co.il/catalog.php?id=150475" target="_blank" rel="noopener">אייבורי</a><br><span class="badge b-best">הזול ביותר</span></td>
+            <td>MX Master 3S, אפור בהיר</td><td class="num">₪279 <span class="note">(במקום 359)</span></td><td>מבצע מוגבל בזמן · משלוח לא צוין</td><td class="final num">₪279+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.bug.co.il/brand/logitech/mx/master/3s/bt" target="_blank" rel="noopener">באג</a></td>
+            <td>MX Master 3S, ‏Bluetooth בלבד</td><td class="num">₪339</td><td>לא צוין</td><td class="final num">₪339+</td>
+          </tr>
+          <tr>
+            <td><a href="https://ksp.co.il/mob/item/211980" target="_blank" rel="noopener">KSP</a><br><span class="badge b-q">אזל מהמלאי</span></td>
+            <td>MX Master 3S, גרפיט</td><td class="num">₪339</td><td>שנתיים, יבואן רשמי</td><td class="final num">₪339</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.bug.co.il/brand/logitech/mx/master/3s/white" target="_blank" rel="noopener">באג</a></td>
+            <td>MX Master 3S עם מקלט Logi Bolt</td><td class="num">₪399</td><td>לא צוין</td><td class="final num">₪399+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.wisebuy.co.il/product.aspx?productid=1255107" target="_blank" rel="noopener">Wisebuy (36 חנויות)</a></td>
+            <td>MX Master 4</td><td class="num">₪408–468</td><td>כולל משלוח · 408 ₪ ביבוא מקביל (שנה), יבואן רשמי שנתיים</td><td class="final num">₪408</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.zap.co.il/ratemodel.aspx?modelid=958700" target="_blank" rel="noopener">דוריקו (דרך זאפ)</a><br><span class="badge b-q">דף בלי תאריך</span></td>
+            <td><b>MX Master 2S</b> (הדגם שבצילום)</td><td class="num">₪511</td><td>משלוח 20 ₪ · עד 5 ימי עסקים</td><td class="final num">₪531</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח. מחירים מתוצאות חיפוש מ־9.11.2026. לא מצאתי קופונים פעילים.</p>
+  </section>
+
+  <section class="panel" id="ms-p-fine" role="tabpanel" aria-labelledby="ms-t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>ה־MX Master 3S זול היום ב־252 ₪ מה־2S, למרות שהוא דגם חדש יותר.</li>
+          <li>שדרוגים ב־3S לפי Logitech: חיישן 8000 DPI (במקום 4000 ב־MX Master 3), קליקים שקטים בכ־90%, ומקלט Logi Bolt.</li>
+          <li>ב־KSP וב־MX Master 4 אצל היבואן הרשמי: שנתיים אחריות.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>גרסת Bluetooth בלבד:</b> בבאג ב־339 ₪ אין מקלט USB בקופסה. אם המחשב בלי Bluetooth, צריך את הגרסה ב־399 ₪.</li>
+          <li><b>גרסת Mac:</b> יש גרסה נפרדת למק. ודאו שבחרתם את הנכונה.</li>
+          <li><b>יבוא מקביל:</b> המחיר הזול של MX Master 4 (408 ₪) הוא ביבוא מקביל, עם שנת אחריות בלבד.</li>
+          <li><b>זיהוי הדגם מהצילום:</b> מבוסס על הצורה והלוגו. את מספר הדגם רואים על המדבקה בתחתית העכבר.</li>
+          <li>תוקף המבצע באייבורי לא ידוע. בדקו את המחיר לפני ההזמנה.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>ה־2S הופסק: קשה למצוא אותו חדש, והמחיר שמצאתי גבוה מהדגמים החדשים.</li>
+          <li>חלק מהמשתמשים מעדיפים את הקליקים הרועשים של הדגמים הישנים, כי הם מרגישים יותר מוחשיים.</li>
+          <li>ה־2S טוען דרך micro-USB, וה־3S וה־4 דרך USB-C (אם מחליפים, צריך כבל אחר).</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>הצילום ששלחת</li>
+      <li><a href="https://www.logitech.com/en-us/shop/o/mx-master-2s" target="_blank" rel="noopener">Logitech: MX Master 2S (הופסק)</a></li>
+      <li><a href="https://support.logi.com/hc/en-my/articles/5528717602327-What-is-the-difference-between-MX-Master-3-and-MX-Master-3S" target="_blank" rel="noopener">Logitech: ההבדלים בין MX Master 3 ל־3S</a></li>
+      <li><a href="https://www.zap.co.il/ratemodel.aspx?modelid=958700" target="_blank" rel="noopener">זאפ: MX Master 2S</a></li>
+      <li><a href="https://www.ivory.co.il/catalog.php?id=150475" target="_blank" rel="noopener">אייבורי: MX Master 3S</a></li>
+      <li><a href="https://www.bug.co.il/brand/logitech/mx/master/3s/bt" target="_blank" rel="noopener">באג: MX Master 3S ‏Bluetooth</a></li>
+      <li><a href="https://www.bug.co.il/brand/logitech/mx/master/3s/white" target="_blank" rel="noopener">באג: MX Master 3S</a></li>
+      <li><a href="https://ksp.co.il/mob/item/211980" target="_blank" rel="noopener">KSP: MX Master 3S</a></li>
+      <li><a href="https://www.wisebuy.co.il/news.aspx?nid=6222" target="_blank" rel="noopener">Wisebuy: MX Master 4 בישראל</a></li>
+      <li><a href="https://www.wisebuy.co.il/product.aspx?productid=1255107" target="_blank" rel="noopener">Wisebuy: השוואת מחירים MX Master 4</a></li>
+      <li><a href="https://www.galaxus.be/en/page/why-i-dont-switch-to-the-logitech-mx-master-3s-23913" target="_blank" rel="noopener">Galaxus: למה לא לעבור ל־3S</a></li>
+    </ol>
+  </footer>
   </div>
 
   <div class="dealview" id="deal-bp" hidden>
