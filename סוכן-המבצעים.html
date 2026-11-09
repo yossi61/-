@@ -786,7 +786,9 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   const KEY='deal-agent-deleted';
   let deleted=[];
   try{deleted=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
-  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(deleted))}catch(e){}};
+  let dbRef=null;
+  const cache=()=>{try{localStorage.setItem(KEY,JSON.stringify(deleted))}catch(e){}};
+  const save=()=>{cache();if(dbRef)dbRef.set({ids:deleted.slice()}).catch(()=>{});};
   const items=[...document.querySelectorAll('.sw-item')];
   const order=items.map(i=>i.dataset.item);
   let current=null;
@@ -812,5 +814,16 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
     deleted.push(b.dataset.yes);save();render();}));
   document.getElementById('restore-btn').addEventListener('click',()=>{deleted=[];save();render();});
   pick(order[0]);render();
+  // Sync deletions across devices through the artifact's shared store; falls back to this browser only.
+  if(window.claude&&window.claude.use){
+    window.claude.use("db").then(db=>{
+      if(!db)return;
+      dbRef=db.doc("settings/deleted");
+      dbRef.onSnapshot(snap=>{
+        const ids=snap.exists&&Array.isArray((snap.data()||{}).ids)?snap.data().ids.filter(x=>typeof x==="string"):[];
+        deleted=ids;cache();render();
+      },()=>{});
+    }).catch(()=>{});
+  }
 })();
 </script>
