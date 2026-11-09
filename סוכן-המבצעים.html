@@ -115,6 +115,13 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
 .sources ol{padding-inline-start:20px;margin:6px 0 0;display:flex;flex-direction:column;gap:4px}
 .sources a{word-break:break-word}
 @media (prefers-reduced-motion:no-preference){.gauge circle.val{transition:stroke-dashoffset 1.2s ease-out}}
+.deal{display:flex;flex-direction:column;gap:22px}
+.deal[hidden]{display:none}
+.switch{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.switch button{text-align:right;border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font-family:var(--body)}
+.switch button[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.switch .sw-name{font:700 17px var(--display)}
+.switch .sw-meta{font-size:14px;color:var(--muted)}
 </style>
 
 <div class="wrap">
@@ -126,6 +133,154 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
     </div>
   </header>
 
+  <div class="switch" role="group" aria-label="בחירת מבצע">
+    <button type="button" data-deal="deal-boost" aria-pressed="true"><span class="sw-name">בוסטר התנעה + משאבה</span><span class="sw-meta num">₪269 · 8/10</span></button>
+    <button type="button" data-deal="deal-tv" aria-pressed="false"><span class="sw-name">טלוויזיה Hisense 43"</span><span class="sw-meta num">₪799 · 8/10</span></button>
+  </div>
+
+  <div class="deal" id="deal-boost">
+  <div class="product">
+    <div>
+      <h2>בוסטר התנעה משולב משאבה: 1000A · ‏160 PSI · ‏12,000mAh</h2>
+      <div class="meta">כנראה Discovery DS-750 (המפרט והמחיר "המקורי" תואמים) · כולל משלוח חינם עד הבית · כולל פנס חירום ומסך דיגיטלי (לפי המודעה)</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪269</div>
+      <div class="was">₪690</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="bo-t-rec" aria-controls="bo-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="bo-t-cmp" aria-controls="bo-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="bo-t-fine" aria-controls="bo-p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <section class="panel" id="bo-p-rec" role="tabpanel" aria-labelledby="bo-t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות 8 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--lime)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="52.8"/>
+        </svg>
+        <div class="score"><div><b class="num">8</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill">לקנות עכשיו ✓</div>
+        <p>בוסטר עם בדיוק אותו מפרט (Discovery DS-750) נמכר בחנויות אחרות ב־549 עד 735 ₪. גם החלופה הקרובה והזולה ביותר שמצאתי, ECO JS-1000, עולה כ־436 ₪. ב־269 ₪ כולל משלוח <b>המחיר נמוך בהרבה מכל מה שמצאתי</b>. התנאי היחיד: המודעה לא מציינת יצרן ודגם. לפני התשלום ודאו בדף המוצר שזה Discovery DS-750 או דגם עם אותו מפרט ואחריות.</p>
+        <div class="alts"><span>לחפש חלופה: רק אם הדגם לא מזוהה</span><span>להמתין: אין סיבה</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון מול המחיר הזול ביותר לאותו מפרט</div><div class="v c-lime num">₪280</div><div class="s">כ־51% פחות מ־549 ₪</div></div>
+      <div class="stat"><div class="k">חיסכון מול החלופה הזולה (ECO JS-1000)</div><div class="v c-cyan num">₪167</div><div class="s">כ־38% פחות מ־436 ₪</div></div>
+      <div class="stat"><div class="k">ה"הנחה" שהמודעה מציגה</div><div class="v c-amber num">₪421</div><div class="s">מול 690 ₪, מחיר שאכן מופיע בחנות אחרת</div></div>
+    </div>
+
+    <div class="box">
+      <h3>איפה 269 ₪ נמצא בטווח המחירים</h3>
+      <p class="note" style="margin:0">המחירים שמצאתי לבוסטר עם אותו מפרט (Discovery DS-750) בחנויות בישראל:</p>
+      <div class="range" role="img" aria-label="טווח מחירים מ-549 עד 735 שקל, המבצע 269 שקל הרבה מתחת לטווח">
+        <!-- scale: 200 to 800 ILS mapped to 0-100% (LTR) -->
+        <div class="mark deal" style="left:11.5%"><span class="lbl up">המבצע ₪269</span></div>
+        <div class="mark" style="left:58.2%"><span class="lbl dn">₪549</span></div>
+        <div class="mark" style="left:81.7%"><span class="lbl up">₪690</span></div>
+        <div class="mark" style="left:89.2%"><span class="lbl dn">₪735</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא מצאתי נתוני היסטוריית מחירים מאומתים למוצר הזה, ולכן אין כאן גרף. אפשר לבדוק בקטגוריית הבוסטרים <a href="https://www.zap.co.il/models.aspx?sog=t-batterycharger&amp;db5875963=9541701" target="_blank" rel="noopener">בזאפ</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="bo-p-cmp" role="tabpanel" aria-labelledby="bo-t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות / דגם</th><th>מפרט</th><th>מחיר מוצג</th><th>משלוח</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr class="best">
+            <td><b>המבצע</b><br><span class="note">מתוך המודעה ששלחת</span><br><span class="badge b-best">הזול ביותר</span></td>
+            <td>1000A · ‏160 PSI · ‏12,000mAh</td><td class="num">₪269</td><td>חינם עד הבית</td><td class="final num">₪269</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.zap.co.il/models.aspx?sog=t-batterycharger&amp;db5875963=9541701" target="_blank" rel="noopener">זאפ</a> · Discovery DS-750</td>
+            <td>אותו מפרט</td><td class="num">₪549–735</td><td>משתנה לפי חנות</td><td class="final num">מ־₪549</td>
+          </tr>
+          <tr>
+            <td><a href="https://motocenter.co.il/product/%D7%91%D7%95%D7%A1%D7%98%D7%A8-%D7%94%D7%AA%D7%A0%D7%A2%D7%94-%D7%9E%D7%A9%D7%95%D7%9C%D7%91-%D7%9E%D7%A9%D7%90%D7%91%D7%94-discovery-ds-750/" target="_blank" rel="noopener">Motocenter</a> · Discovery DS-750</td>
+            <td>אותו מפרט</td><td class="num">₪690</td><td>לא צוין</td><td class="final num">₪690+</td>
+          </tr>
+          <tr>
+            <td><a href="https://orsale.co.il/product/%D7%91%D7%95%D7%A1%D7%98%D7%A8-%D7%94%D7%AA%D7%A0%D7%A2%D7%94-%D7%91%D7%A9%D7%99%D7%9C%D7%95%D7%91-%D7%9E%D7%A9%D7%90%D7%91%D7%94-ds-750/" target="_blank" rel="noopener">Orsale</a> · Discovery DS-750<br><span class="badge b-q">עמוד ישן</span></td>
+            <td>אותו מפרט</td><td class="num">₪495</td><td>לא צוין</td><td class="final num">₪495+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.payngo.co.il/355502.html" target="_blank" rel="noopener">מחסני חשמל</a> / <a href="https://www.ivory.co.il/catalog.php?id=168499" target="_blank" rel="noopener">אייבורי</a> · ECO JS-1000</td>
+            <td>1000A · <b>150</b> PSI · ‏12,000mAh</td><td class="num">₪435–436</td><td>לא צוין</td><td class="final num">₪435+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.payngo.co.il/380640.html" target="_blank" rel="noopener">מחסני חשמל</a> · ONE A50</td>
+            <td>2000A · קומפרסור · ‏12,000mAh</td><td class="num">₪349</td><td>חינם, עד 7 ימים</td><td class="final num">₪349</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח. מחירים מתוצאות חיפוש מ־9.11.2026. ‏ONE A50 ו־ECO JS-1000 הם דגמים אחרים, ומופיעים כחלופות. לא מצאתי קופונים פעילים.</p>
+  </section>
+
+  <section class="panel" id="bo-p-fine" role="tabpanel" aria-labelledby="bo-t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>חצי מהמחיר הזול ביותר שמצאתי לבוסטר עם אותו מפרט, כולל משלוח חינם.</li>
+          <li>שלושה מוצרים במכשיר אחד: בוסטר התנעה, משאבת אוויר לצמיגים וסוללת גיבוי לטלפון, וגם פנס חירום.</li>
+          <li>לפי היבואן, DS-750 מתאים להתנעת מנועי בנזין עד 6 ליטר ודיזל עד 3.5 ליטר, כלומר כמעט לכל רכב פרטי.</li>
+          <li>ה"מחיר המקורי" 690 ₪ אמיתי: זה המחיר של DS-750 ב־Motocenter.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>אין שם יצרן במודעה:</b> הזיהוי כ־Discovery DS-750 מבוסס על המפרט והמחיר בלבד. בדקו בדף המוצר את היצרן, הדגם והאחריות.</li>
+          <li><b>אחריות:</b> המודעה לא מזכירה אחריות או יבואן רשמי.</li>
+          <li><b>1000A הוא זרם שיא:</b> זה המספר השיווקי. זרם ההתנעה הרציף נמוך יותר, וזה רגיל בכל הבוסטרים.</li>
+          <li><b>מכשיר עם סוללת ליתיום:</b> טענו אותו מדי כמה חודשים, אחרת הוא עלול להיות ריק בדיוק כשתצטרכו אותו.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>לא מצאתי ביקורות עצמאיות או מבחני מעבדה לדגם הזה, ולכן אין נתונים על אמינות או על מהירות הניפוח.</li>
+          <li>בבוסטרים אחרים בשוק בקיבולת 12,000mAh יש זרם שיא גבוה יותר (למשל 2000A ב־ONE A50 ב־349 ₪). ל־1000A יש פחות מרווח ברכבים גדולים או בחורף.</li>
+          <li>לא ידוע כמה זמן לוקח לנפח צמיג ב־160 PSI, ולא נמצא מקור שמאמת את הנתון הזה מעבר למודעה ולדפי החנויות.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>מודעת המבצע (צילום מסך שנשלח)</li>
+      <li><a href="https://motocenter.co.il/product/%D7%91%D7%95%D7%A1%D7%98%D7%A8-%D7%94%D7%AA%D7%A0%D7%A2%D7%94-%D7%9E%D7%A9%D7%95%D7%9C%D7%91-%D7%9E%D7%A9%D7%90%D7%91%D7%94-discovery-ds-750/" target="_blank" rel="noopener">Motocenter: Discovery DS-750</a></li>
+      <li><a href="https://orsale.co.il/product/%D7%91%D7%95%D7%A1%D7%98%D7%A8-%D7%94%D7%AA%D7%A0%D7%A2%D7%94-%D7%91%D7%A9%D7%99%D7%9C%D7%95%D7%91-%D7%9E%D7%A9%D7%90%D7%91%D7%94-ds-750/" target="_blank" rel="noopener">Orsale: בוסטר DS-750</a></li>
+      <li><a href="https://chooz.co.il/en/product/discovery-750-jump-starter-professional-air-pump" target="_blank" rel="noopener">Chooz: מפרט Discovery 750</a></li>
+      <li><a href="https://www.zap.co.il/models.aspx?sog=t-batterycharger&amp;db5875963=9541701" target="_blank" rel="noopener">זאפ: בוסטרים 12V</a></li>
+      <li><a href="https://www.payngo.co.il/355502.html" target="_blank" rel="noopener">מחסני חשמל: ECO JS-1000</a></li>
+      <li><a href="https://www.ivory.co.il/catalog.php?id=168499" target="_blank" rel="noopener">אייבורי: ECO JS-1000</a></li>
+      <li><a href="https://www.payngo.co.il/380640.html" target="_blank" rel="noopener">מחסני חשמל: ONE A50</a></li>
+      <li><a href="https://www.homecenter.co.il/products/1746509292334" target="_blank" rel="noopener">הום סנטר: בוסטר 1000A ‏12,000mAh ‏160 PSI</a></li>
+    </ol>
+  </footer>
+  </div>
+
+  <div class="deal" id="deal-tv" hidden>
   <div class="product">
     <div>
       <h2>טלוויזיה חכמה Hisense 43" QLED 4K, דגם E79Q</h2>
@@ -138,13 +293,13 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </div>
 
   <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
-    <button role="tab" id="t-rec" aria-controls="p-rec" aria-selected="true">המלצה</button>
-    <button role="tab" id="t-cmp" aria-controls="p-cmp" aria-selected="false">השוואת מחירים</button>
-    <button role="tab" id="t-fine" aria-controls="p-fine" aria-selected="false">האותיות הקטנות</button>
+    <button role="tab" id="tv-t-rec" aria-controls="tv-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="tv-t-cmp" aria-controls="tv-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="tv-t-fine" aria-controls="tv-p-fine" aria-selected="false">האותיות הקטנות</button>
   </nav>
 
   <!-- TAB 1 -->
-  <section class="panel" id="p-rec" role="tabpanel" aria-labelledby="t-rec">
+  <section class="panel" id="tv-p-rec" role="tabpanel" aria-labelledby="tv-t-rec">
     <div class="verdict">
       <div class="gauge" aria-label="ציון כדאיות 8 מתוך 10">
         <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -188,7 +343,7 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </section>
 
   <!-- TAB 2 -->
-  <section class="panel" id="p-cmp" role="tabpanel" aria-labelledby="t-cmp" hidden>
+  <section class="panel" id="tv-p-cmp" role="tabpanel" aria-labelledby="tv-t-cmp" hidden>
     <div class="tablewrap">
       <table>
         <thead><tr><th>חנות / אתר</th><th>מחיר מוצג</th><th>משלוח</th><th>אחריות</th><th>מחיר סופי</th></tr></thead>
@@ -225,7 +380,7 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </section>
 
   <!-- TAB 3 -->
-  <section class="panel" id="p-fine" role="tabpanel" aria-labelledby="t-fine" hidden>
+  <section class="panel" id="tv-p-fine" role="tabpanel" aria-labelledby="tv-t-fine" hidden>
     <div class="fp">
       <section class="good">
         <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
@@ -271,28 +426,32 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
       <li><a href="https://www.test-achats.be/hightech/televiseurs/comparateur/hisense-43e79s/15/127282" target="_blank" rel="noopener">Test-Achats: HISENSE 43E79S</a></li>
     </ol>
   </footer>
+  </div>
 </div>
 
 <script>
 (function(){
-  const tabs=[...document.querySelectorAll('[role="tab"]')];
-  function show(id){
-    tabs.forEach(t=>{
-      const on=t.id===id;
-      t.setAttribute('aria-selected',on);
-      t.tabIndex=on?0:-1;
-      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+  document.querySelectorAll('.deal').forEach(deal=>{
+    const tabs=[...deal.querySelectorAll('[role="tab"]')];
+    function show(id){
+      tabs.forEach(t=>{const on=t.id===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+    }
+    tabs.forEach((t,i)=>{
+      t.addEventListener('click',()=>show(t.id));
+      t.addEventListener('keydown',e=>{let j=null;
+        if(e.key==='ArrowLeft')j=(i+1)%tabs.length;
+        if(e.key==='ArrowRight')j=(i-1+tabs.length)%tabs.length;
+        if(j!==null){e.preventDefault();show(tabs[j].id);tabs[j].focus();}});
     });
-  }
-  tabs.forEach((t,i)=>{
-    t.addEventListener('click',()=>show(t.id));
-    t.addEventListener('keydown',e=>{
-      let j=null;
-      if(e.key==='ArrowLeft')j=(i+1)%tabs.length;
-      if(e.key==='ArrowRight')j=(i-1+tabs.length)%tabs.length;
-      if(j!==null){e.preventDefault();show(tabs[j].id);tabs[j].focus();}
-    });
+    show(tabs[0].id);
   });
-  show('t-rec');
+  const sw=[...document.querySelectorAll('.switch button')];
+  function pick(id){
+    sw.forEach(b=>b.setAttribute('aria-pressed',b.dataset.deal===id));
+    document.querySelectorAll('.deal').forEach(d=>d.hidden=d.id!==id);
+  }
+  sw.forEach(b=>b.addEventListener('click',()=>pick(b.dataset.deal)));
+  pick('deal-boost');
 })();
 </script>
