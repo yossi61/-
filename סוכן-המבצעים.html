@@ -118,8 +118,22 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
 .dealview{display:flex;flex-direction:column;gap:22px}
 .dealview[hidden]{display:none}
 .switch{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.switch button{text-align:right;border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font-family:var(--body)}
-.switch button[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.sw-item{position:relative;display:flex}
+.sw-item[hidden]{display:none}
+.switch .sw-pick{flex:1;min-width:0;text-align:right;border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:12px 16px 12px 48px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font-family:var(--body)}
+.switch .sw-pick[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.sw-del{position:absolute;left:8px;top:8px;width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);font-size:15px;cursor:pointer}
+.sw-del:hover{color:var(--red);border-color:var(--red)}
+.sw-confirm{position:absolute;inset:0;border-radius:16px;background:var(--bad-bg);border:2px solid var(--red);display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:8px;font-weight:700;color:var(--fg)}
+.sw-confirm[hidden]{display:none}
+.sw-confirm button{border:0;border-radius:10px;padding:6px 14px;font:700 15px var(--display);cursor:pointer}
+.sw-confirm .yes{background:var(--red);color:var(--bg)}
+.sw-confirm .no{background:var(--surface);color:var(--fg)}
+.restore{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.restore[hidden]{display:none}
+.restore button{border:1px solid var(--line);background:var(--surface);color:var(--cyan);border-radius:10px;padding:6px 12px;font:700 15px var(--display);cursor:pointer}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:18px;padding:28px;text-align:center}
+.empty p{margin:8px 0 0;color:var(--muted)}
 .switch .sw-name{font:700 17px var(--display)}
 .switch .sw-meta{font-size:14px;color:var(--muted)}
 </style>
@@ -134,8 +148,32 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </header>
 
   <div class="switch" role="group" aria-label="בחירת מבצע">
-    <button type="button" data-deal="deal-boost" aria-pressed="true"><span class="sw-name">בוסטר התנעה + משאבה</span><span class="sw-meta num">₪269 · 8/10</span></button>
-    <button type="button" data-deal="deal-tv" aria-pressed="false"><span class="sw-name">טלוויזיה Hisense 43"</span><span class="sw-meta num">₪799 · 8/10</span></button>
+    <div class="sw-item" data-item="deal-boost">
+      <button type="button" class="sw-pick" data-deal="deal-boost" aria-pressed="true"><span class="sw-name">בוסטר התנעה + משאבה</span><span class="sw-meta num">₪269 · 8/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-boost" aria-label="מחיקת בוסטר התנעה + משאבה" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-boost">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
+    <div class="sw-item" data-item="deal-tv">
+      <button type="button" class="sw-pick" data-deal="deal-tv" aria-pressed="false"><span class="sw-name">טלוויזיה Hisense 43"</span><span class="sw-meta num">₪799 · 8/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-tv" aria-label="מחיקת טלוויזיה Hisense 43"" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-tv">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
+  </div>
+  <div class="restore" id="restore" hidden>
+    <span id="restore-text"></span>
+    <button type="button" id="restore-btn">שחזור המוצרים שנמחקו</button>
+  </div>
+  <div class="empty" id="empty" hidden>
+    <h2>אין מוצרים ברשימה</h2>
+    <p>מחקת את כל המוצרים שנבדקו. אפשר לשחזר אותם בכפתור שלמעלה, או לשלוח לי מבצע חדש לבדיקה.</p>
   </div>
 
   <div class="dealview" id="deal-boost">
@@ -446,12 +484,34 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
     });
     show(tabs[0].id);
   });
-  const sw=[...document.querySelectorAll('.switch button')];
+  const KEY='deal-agent-deleted';
+  let deleted=[];
+  try{deleted=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(deleted))}catch(e){}};
+  const items=[...document.querySelectorAll('.sw-item')];
+  const order=items.map(i=>i.dataset.item);
+  let current=null;
   function pick(id){
-    sw.forEach(b=>b.setAttribute('aria-pressed',b.dataset.deal===id));
+    current=id;
+    document.querySelectorAll('.sw-pick').forEach(b=>b.setAttribute('aria-pressed',b.dataset.deal===id));
     document.querySelectorAll('.dealview').forEach(d=>d.hidden=d.id!==id);
   }
-  sw.forEach(b=>b.addEventListener('click',()=>pick(b.dataset.deal)));
-  pick('deal-boost');
+  function render(){
+    const left=order.filter(id=>!deleted.includes(id));
+    items.forEach(i=>{i.hidden=deleted.includes(i.dataset.item);i.querySelector('.sw-confirm').hidden=true;});
+    document.getElementById('empty').hidden=left.length>0;
+    const r=document.getElementById('restore');
+    r.hidden=deleted.length===0;
+    document.getElementById('restore-text').textContent=deleted.length===1?'מוצר אחד נמחק.':deleted.length+' מוצרים נמחקו.';
+    if(!left.includes(current)) pick(left[0]||null);
+  }
+  document.querySelectorAll('.sw-pick').forEach(b=>b.addEventListener('click',()=>pick(b.dataset.deal)));
+  document.querySelectorAll('.sw-del').forEach(b=>b.addEventListener('click',()=>{
+    const c=b.parentElement.querySelector('.sw-confirm');c.hidden=false;c.querySelector('.no').focus();}));
+  document.querySelectorAll('.sw-confirm .no').forEach(b=>b.addEventListener('click',()=>{b.parentElement.hidden=true;}));
+  document.querySelectorAll('.sw-confirm .yes').forEach(b=>b.addEventListener('click',()=>{
+    deleted.push(b.dataset.yes);save();render();}));
+  document.getElementById('restore-btn').addEventListener('click',()=>{deleted=[];save();render();});
+  pick(order[0]);render();
 })();
 </script>
