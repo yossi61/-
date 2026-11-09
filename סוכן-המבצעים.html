@@ -1,0 +1,298 @@
+<title>סוכן המבצעים</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&family=Assistant:wght@400;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a "scanner" console. Big verdict up top, three tabs below, each tab one clear job. */
+:root{
+  --bg:#f3f5fb; --surface:#ffffff; --surface-2:#e9edf7; --fg:#121633; --muted:#5a6182; --line:#d5dbea;
+  --accent:#ff3d7f; --accent-ink:#ffffff; --cyan:#0090c8; --lime:#1a9c4a; --amber:#c27400; --red:#d4283c;
+  --good-bg:#e3f7ea; --warn-bg:#fff2dc; --bad-bg:#fde6e9;
+  --display:"Rubik","Assistant",system-ui,sans-serif;
+  --body:"Assistant","Rubik",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b0e22; --surface:#141838; --surface-2:#1c2147; --fg:#eef0ff; --muted:#a3a9cf; --line:#2b3163;
+  --accent:#ff4d8b; --accent-ink:#0b0e22; --cyan:#3fd0ff; --lime:#55e08a; --amber:#ffbf47; --red:#ff6b7d;
+  --good-bg:#0f3324; --warn-bg:#3a2a0c; --bad-bg:#3d1520; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b0e22; --surface:#141838; --surface-2:#1c2147; --fg:#eef0ff; --muted:#a3a9cf; --line:#2b3163;
+  --accent:#ff4d8b; --accent-ink:#0b0e22; --cyan:#3fd0ff; --lime:#55e08a; --amber:#ffbf47; --red:#ff6b7d;
+  --good-bg:#0f3324; --warn-bg:#3a2a0c; --bad-bg:#3d1520; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:920px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+a{color:var(--cyan);font-weight:600}
+a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* header */
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:46px;height:46px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:900 22px var(--display)}
+.brand h1{font-size:clamp(30px,6vw,46px);font-weight:900;letter-spacing:-.5px}
+.brand h1 span{color:var(--accent)}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+
+.product{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:12px 20px;align-items:center}
+.product h2{font-size:clamp(20px,3.6vw,26px);font-weight:700}
+.product .meta{color:var(--muted);font-size:15px}
+.pricebox{text-align:left;direction:ltr}
+.pricebox .now{font:900 clamp(34px,7vw,48px)/1 var(--display);color:var(--accent)}
+.pricebox .was{color:var(--muted);text-decoration:line-through;font-family:var(--mono)}
+@media (max-width:560px){.product{grid-template-columns:1fr}.pricebox{text-align:right;direction:rtl}}
+
+/* tabs */
+.tabs{display:flex;gap:8px;background:var(--surface-2);padding:6px;border-radius:16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.tabs button{flex:1;min-width:0;border:0;background:transparent;color:var(--muted);font:700 16px var(--display);padding:12px 8px;border-radius:12px;cursor:pointer;transition:background .2s,color .2s}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.tabs button:hover:not([aria-selected="true"]){color:var(--fg)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.panel{display:flex;flex-direction:column;gap:20px}
+
+/* verdict */
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px}
+@media (max-width:620px){.verdict{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.gauge{position:relative;width:190px;height:190px}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .score{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge .score b{font:900 64px/1 var(--display);color:var(--lime)}
+.gauge .score small{display:block;font-family:var(--mono);color:var(--muted);font-size:14px}
+.pill{display:inline-block;font:900 clamp(26px,5vw,38px)/1.1 var(--display);background:var(--lime);color:var(--bg);padding:8px 18px;border-radius:14px}
+.verdict p{margin:12px 0 0;max-width:60ch}
+.alts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+@media (max-width:620px){.alts{justify-content:center}}
+.alts span{font-size:14px;border:1px dashed var(--line);border-radius:999px;padding:3px 12px;color:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:620px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stat .k{font-size:14px;color:var(--muted)}
+.stat .v{font:900 30px/1.2 var(--display)}
+.stat .s{font-size:14px;color:var(--muted)}
+.c-lime{color:var(--lime)}.c-cyan{color:var(--cyan)}.c-amber{color:var(--amber)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.box h3{font-size:22px;margin-bottom:10px}
+.range{position:relative;height:14px;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--amber),var(--red));margin:44px 6px 34px;direction:ltr}
+.mark{position:absolute;top:50%;transform:translate(-50%,-50%);width:4px;height:30px;background:var(--fg);border-radius:2px}
+.mark .lbl{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:13px;color:var(--fg)}
+.mark .up{bottom:34px}.mark .dn{top:34px;color:var(--muted)}
+.mark.deal{background:var(--accent);width:8px}
+.mark.deal .lbl{color:var(--accent);font-weight:700}
+.na{display:flex;gap:12px;align-items:flex-start;background:var(--warn-bg);border-radius:14px;padding:14px 16px;margin-top:6px}
+.na b{color:var(--amber);font-family:var(--display)}
+.checklist{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px}
+
+/* table */
+.tablewrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{padding:14px 14px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 14px var(--display);color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.final{font:900 20px var(--display);white-space:nowrap}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-top:4px}
+.b-best{background:var(--accent);color:var(--accent-ink)}
+.b-q{background:var(--warn-bg);color:var(--amber)}
+.note{font-size:14px;color:var(--muted)}
+
+/* fine print */
+.fp{display:grid;gap:16px}
+.fp section{border-radius:18px;padding:20px;border:1px solid var(--line)}
+.fp h3{font-size:24px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.fp .ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:900 20px var(--display);color:var(--bg)}
+.fp ul{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:8px}
+.good{background:var(--good-bg)}.good h3{color:var(--lime)}.good .ico{background:var(--lime)}
+.warn{background:var(--warn-bg)}.warn h3{color:var(--amber)}.warn .ico{background:var(--amber)}
+.bad{background:var(--bad-bg)}.bad h3{color:var(--red)}.bad .ico{background:var(--red)}
+
+.sources{font-size:14px;color:var(--muted)}
+.sources ol{padding-inline-start:20px;margin:6px 0 0;display:flex;flex-direction:column;gap:4px}
+.sources a{word-break:break-word}
+@media (prefers-reduced-motion:no-preference){.gauge circle.val{transition:stroke-dashoffset 1.2s ease-out}}
+</style>
+
+<div class="wrap">
+  <header class="brand">
+    <div class="logo" aria-hidden="true">%</div>
+    <div>
+      <h1>סוכן <span>המבצעים</span></h1>
+      <div class="tag">בדיקה מ־9.11.2026 · מבוסס מקורות</div>
+    </div>
+  </header>
+
+  <div class="product">
+    <div>
+      <h2>טלוויזיה חכמה Hisense 43" QLED 4K, דגם E79Q</h2>
+      <div class="meta">מחסני חשמל · מבצע Black November · כולל משלוח חינם עד הבית · שנת אחריות יבואן רשמי (לפי המודעה)</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪799</div>
+      <div class="was">₪1,190 / ₪1,290</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="t-rec" aria-controls="p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="t-cmp" aria-controls="p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="t-fine" aria-controls="p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <!-- TAB 1 -->
+  <section class="panel" id="p-rec" role="tabpanel" aria-labelledby="t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות 8 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--lime)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="52.8"/>
+        </svg>
+        <div class="score"><div><b class="num">8</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill">לקנות עכשיו ✓</div>
+        <p>‏799 ₪ כולל משלוח הוא <b>המחיר הנמוך ביותר שמצאתי</b> לדגם הזה בישראל. המחיר הבא הנמוך ביותר שמצאתי הוא כ־928 ₪ (בזאפ). זו טלוויזיה בסיסית־טובה לחדר שינה או לחדר ילדים, לא למי שמחפש איכות תמונה וסאונד גבוהים במיוחד. לפני התשלום ודאו שהדגם הוא <b>43E79Q</b> ושהמחיר עדיין בתוקף.</p>
+        <div class="alts"><span>לחפש חלופה: לא נדרש</span><span>להמתין: אין סימן לירידה נוספת</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון מול המחיר הזול ביותר שמצאתי</div><div class="v c-lime num">₪129</div><div class="s">כ־14% פחות מ־928 ₪</div></div>
+      <div class="stat"><div class="k">חיסכון מול מחיר רגיל נפוץ</div><div class="v c-cyan num">₪391</div><div class="s">כ־33% פחות מ־1,190 ₪</div></div>
+      <div class="stat"><div class="k">ה"הנחה" שהמודעה מציגה</div><div class="v c-amber num">₪491</div><div class="s">מול 1,290 ₪, גבוה מהמחיר בפועל</div></div>
+    </div>
+
+    <div class="box">
+      <h3>איפה 799 ₪ נמצא בטווח המחירים</h3>
+      <p class="note" style="margin:0">המחירים שמצאתי לדגם הזה בחנויות בישראל, מהזול ליקר:</p>
+      <div class="range" role="img" aria-label="טווח מחירים מ-928 עד 1,290 שקל, המבצע 799 שקל מתחת לטווח">
+        <!-- scale: 760 to 1300 ILS mapped to 0-100% (LTR) -->
+        <div class="mark deal" style="left:7.2%"><span class="lbl up">המבצע ₪799</span></div>
+        <div class="mark" style="left:31.1%"><span class="lbl dn">₪928</span></div>
+        <div class="mark" style="left:42.4%"><span class="lbl up">₪989–999</span></div>
+        <div class="mark" style="left:79.6%"><span class="lbl dn">₪1,190</span></div>
+        <div class="mark" style="left:98.1%"><span class="lbl up">₪1,290</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא הצלחתי לקרוא את גרפי היסטוריית המחירים בזאפ וב־Wisebuy, ולכן אין לי נתונים מאומתים על המחיר בחודשים האחרונים. כדי לא להציג נתונים שלא נבדקו, אין כאן גרף. אפשר לבדוק את ההיסטוריה ישירות <a href="https://www.zap.co.il/model.aspx?modelid=1262108" target="_blank" rel="noopener">בדף הדגם בזאפ</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2 -->
+  <section class="panel" id="p-cmp" role="tabpanel" aria-labelledby="t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות / אתר</th><th>מחיר מוצג</th><th>משלוח</th><th>אחריות</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr class="best">
+            <td><b>מחסני חשמל</b><br><span class="note">מתוך המודעה ששלחת</span><br><span class="badge b-best">הזול ביותר</span></td>
+            <td class="num">₪799</td><td>חינם עד הבית</td><td>שנה, יבואן רשמי</td><td class="final num">₪799</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.zap.co.il/model.aspx?modelid=1262108" target="_blank" rel="noopener">זאפ (השוואת מחירים)</a></td>
+            <td class="num">₪928–1,289</td><td>חלק מההצעות כוללות משלוח חינם</td><td>משתנה לפי חנות</td><td class="final num">מ־₪928</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.cwc.co.il/?p=876205" target="_blank" rel="noopener">CWC</a><br><span class="badge b-q">שני מחירים בתוצאות</span></td>
+            <td class="num">₪990 / ₪1,190</td><td>אספקה עד 7 ימי עסקים, עלות לא צוינה</td><td>12 חודשים, ניו־פאן דיספליי</td><td class="final num">₪990+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.soferavi.co.il/%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D/%D7%98%D7%9C%D7%95%D7%95%D7%99%D7%96%D7%99%D7%94-43-%D7%90%D7%99%D7%A0%D7%A5-%D7%94%D7%99%D7%99%D7%A1%D7%A0%D7%A1-%E2%81%A643e79q%E2%81%A9/" target="_blank" rel="noopener">אבי סופר</a><br><span class="badge b-q">שני מחירים בתוצאות</span></td>
+            <td class="num">₪999 / ₪1,190</td><td>לא צוין</td><td>שנה, יבואן רשמי</td><td class="final num">₪999+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.wisebuy.co.il/product.aspx?category=e-tv&amp;productid=1262108" target="_blank" rel="noopener">Wisebuy (4 חנויות)</a></td>
+            <td class="num">₪1,289–1,290</td><td>לא צוין</td><td>משתנה לפי חנות</td><td class="final num">₪1,289+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח, כך שהמחיר הסופי עשוי להיות גבוה יותר. מחירים מתוצאות חיפוש מ־9.11.2026, והם משתנים כל הזמן. לא מצאתי קופונים פעילים לדגם הזה.</p>
+
+    <div class="box">
+      <h3>חלופה קרובה שכדאי להכיר</h3>
+      <p style="margin:0"><b>Hisense 43E79NQ</b> הוא דגם אחר, דומה מאוד. ב<a href="https://www.bug.co.il/brand/hisense/43/e79nq" target="_blank" rel="noopener">באג</a> וב<a href="https://citydeal.co.il/product/hisense-43e79nq-%d7%98%d7%9c%d7%95%d7%95%d7%99%d7%96%d7%99%d7%94-%d7%97%d7%9b%d7%9e%d7%94-43-%d7%90%d7%99%d7%a0%d7%a5-qled-4k-%d7%a9%d7%9c%d7%95%d7%a9-%d7%a9%d7%a0%d7%99%d7%9d-%d7%90%d7%97%d7%a8%d7%99" target="_blank" rel="noopener">סיטי דיל</a> הוא נמכר עם <b>3 שנות אחריות</b> יבואן. לא הצלחתי לאמת את המחיר שלו, ולכן הוא לא מופיע בטבלה.</p>
+    </div>
+  </section>
+
+  <!-- TAB 3 -->
+  <section class="panel" id="p-fine" role="tabpanel" aria-labelledby="t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>המחיר הנמוך ביותר שמצאתי לדגם הזה, כולל משלוח חינם עד הבית.</li>
+          <li>אחריות של היבואן הרשמי (ניו־פאן דיספליי), לא יבוא מקביל.</li>
+          <li>מסך QLED ‏4K עם תמיכה ב־Dolby Vision וב־HDR10, וסאונד Dolby Atmos (2×10 וואט).</li>
+          <li>מערכת הפעלה חכמה VIDAA U9 עם אפליקציות סטרימינג.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>המחיר "המקורי" לא עקבי:</b> בטקסט כתוב "במקום 1,290 ₪", ובתמונה מופיע מחיר מחוק של 1,190 ₪. ההנחה האמיתית מול השוק היא כ־130 ₪, לא 491 ₪.</li>
+          <li><b>Q או NQ:</b> ודאו שהדגם בעגלה הוא 43E79Q. הדגם 43E79NQ נמכר במקומות אחרים עם 3 שנות אחריות, ובמבצע הזה יש שנה אחת.</li>
+          <li><b>תוקף המבצע:</b> זה מבצע Black November, ובמודעה יש הערה בכתב קטן על תוקף המחיר. בדקו באתר שהמחיר עדיין פעיל לפני התשלום.</li>
+          <li><b>קצב רענון:</b> חנות אחת מציינת 120Hz עם MEMC ו־VRR. לא מצאתי מקור עצמאי שמאשר שזה קצב הרענון הטבעי של המסך.</li>
+          <li>לא מצוין אם התקנה על הקיר או זרוע תלייה כלולים במחיר.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>ארגון הצרכנים הבלגי Test-Achats העריך את הביצועים כ"מספקים" בלבד: ציוד בסיסי, ותמונה וסאונד סבירים אבל לא מצוינים.</li>
+          <li>בדגמים מאותה סדרה (43E79S, 55E79Q) ציוני הסאונד נמוכים. סביר שתרצו מקרן קול.</li>
+          <li>הדגם מ־2025, ובאירופה כבר יצא מחליף (E79S, 2026). חנות בלגית כבר מסמנת את הדגם הזה כלא זמין.</li>
+          <li>שנת אחריות אחת בלבד, בזמן שבדגם הקרוב 43E79NQ יש 3 שנים.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>מודעת המבצע של מחסני חשמל (צילום מסך שנשלח)</li>
+      <li><a href="https://www.zap.co.il/model.aspx?modelid=1262108" target="_blank" rel="noopener">זאפ: Hisense 43E79Q</a></li>
+      <li><a href="https://www.wisebuy.co.il/product.aspx?category=e-tv&amp;productid=1262108" target="_blank" rel="noopener">Wisebuy: Hisense 43E79Q</a></li>
+      <li><a href="https://www.cwc.co.il/?p=876205" target="_blank" rel="noopener">CWC: טלוויזיה חכמה QLED 43E79Q</a></li>
+      <li><a href="https://www.soferavi.co.il/%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%9D/%D7%98%D7%9C%D7%95%D7%95%D7%99%D7%96%D7%99%D7%94-43-%D7%90%D7%99%D7%A0%D7%A5-%D7%94%D7%99%D7%99%D7%A1%D7%A0%D7%A1-%E2%81%A643e79q%E2%81%A9/" target="_blank" rel="noopener">אבי סופר: הייסנס 43E79Q</a></li>
+      <li><a href="https://www.bug.co.il/brand/hisense/43/e79nq" target="_blank" rel="noopener">באג: Hisense 43E79NQ</a></li>
+      <li><a href="https://www.test-achats.be/hightech/televiseurs/comparateur/hisense-43e79q/15/123084" target="_blank" rel="noopener">Test-Achats: HISENSE 43E79Q</a></li>
+      <li><a href="https://www.test-achats.be/hightech/televiseurs/comparateur/hisense-43e79s/15/127282" target="_blank" rel="noopener">Test-Achats: HISENSE 43E79S</a></li>
+    </ol>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const tabs=[...document.querySelectorAll('[role="tab"]')];
+  function show(id){
+    tabs.forEach(t=>{
+      const on=t.id===id;
+      t.setAttribute('aria-selected',on);
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+  }
+  tabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>show(t.id));
+    t.addEventListener('keydown',e=>{
+      let j=null;
+      if(e.key==='ArrowLeft')j=(i+1)%tabs.length;
+      if(e.key==='ArrowRight')j=(i-1+tabs.length)%tabs.length;
+      if(j!==null){e.preventDefault();show(tabs[j].id);tabs[j].focus();}
+    });
+  });
+  show('t-rec');
+})();
+</script>
