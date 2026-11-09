@@ -148,6 +148,15 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </header>
 
   <div class="switch" role="group" aria-label="בחירת מבצע">
+    <div class="sw-item" data-item="deal-bp">
+      <button type="button" class="sw-pick" data-deal="deal-bp" aria-pressed="false"><span class="sw-name">מד לחץ דם Omron M7</span><span class="sw-meta num">מ־₪549 · 7/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-bp" aria-label="מחיקת מד לחץ דם Omron M7" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-bp">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
     <div class="sw-item" data-item="deal-boost">
       <button type="button" class="sw-pick" data-deal="deal-boost" aria-pressed="true"><span class="sw-name">בוסטר התנעה + משאבה</span><span class="sw-meta num">₪269 · 8/10</span></button>
       <button type="button" class="sw-del" data-del="deal-boost" aria-label="מחיקת בוסטר התנעה + משאבה" title="מחיקה">✕</button>
@@ -174,6 +183,143 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   <div class="empty" id="empty" hidden>
     <h2>אין מוצרים ברשימה</h2>
     <p>מחקת את כל המוצרים שנבדקו. אפשר לשחזר אותם בכפתור שלמעלה, או לשלוח לי מבצע חדש לבדיקה.</p>
+  </div>
+
+  <div class="dealview" id="deal-bp" hidden>
+  <div class="product">
+    <div>
+      <h2>מד לחץ דם Omron M7 Intelli IT AFib</h2>
+      <div class="meta">זוהה מהצילום: לוגו Intellisense AFib, ‏Bluetooth, שני משתמשים, שרוול HEM-FL31 (22–42 ס"מ) · כנראה דגם HEM-7380T1 · אין מבצע, חיפוש המחיר הטוב ביותר</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪549</div>
+      <div class="was" style="text-decoration:none">המחיר הזול ביותר שמצאתי</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="bp-t-rec" aria-controls="bp-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="bp-t-cmp" aria-controls="bp-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="bp-t-fine" aria-controls="bp-p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <section class="panel" id="bp-p-rec" role="tabpanel" aria-labelledby="bp-t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות 7 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--cyan)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="79.2"/>
+        </svg>
+        <div class="score"><div><b class="num" style="color:var(--cyan)">7</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill" style="background:var(--cyan)">לקנות ב־Citysport, אחרי בדיקת הדגם</div>
+        <p>המחיר הנמוך ביותר שמצאתי הוא <b>549 ₪ ב־Citysport</b>, כ־80 ₪ פחות משאר החנויות (627–639 ₪). הבעיה: יש שתי גרסאות עם שם כמעט זהה. הגרסה שבצילום (עם הלוגו Intellisense AFib) בודקת פרפור פרוזדורים בכל מדידה. בגרסה הישנה (HEM-7361T) הבדיקה נעשית רק בשלוש מדידות רצופות. בדף של Citysport לא ברור איזו גרסה נמכרת, ולכן ודאו את מספר הדגם לפני הקנייה.</p>
+        <div class="alts"><span>אם זו הגרסה הישנה: Xmed ב־631 ₪ (בשם המוצר מופיע AFIB)</span><span>להמתין: אין מבצע פעיל לגרסה הזו</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון מול החנות הבאה</div><div class="v c-lime num">₪78</div><div class="s">549 ₪ מול 627 ₪ בבי טבע</div></div>
+      <div class="stat"><div class="k">המחיר "המקורי" ב־Citysport</div><div class="v c-amber num">₪750</div><div class="s">גבוה מכל מחיר אחר שמצאתי</div></div>
+      <div class="stat"><div class="k">בחו"ל (להשוואה בלבד)</div><div class="v c-cyan num">£84–138</div><div class="s">חנויות בבריטניה, לפני משלוח ומכס</div></div>
+    </div>
+
+    <div class="box">
+      <h3>טווח המחירים בישראל</h3>
+      <div class="range" role="img" aria-label="טווח מחירים מ-549 עד 639 שקל">
+        <!-- scale: 500 to 800 ILS mapped to 0-100% (LTR) -->
+        <div class="mark deal" style="left:16.3%"><span class="lbl up">Citysport ₪549</span></div>
+        <div class="mark" style="left:44.3%"><span class="lbl dn">₪627–639</span></div>
+        <div class="mark" style="left:83.3%"><span class="lbl up">"מחיר מקורי" ₪750</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא מצאתי נתוני היסטוריית מחירים מאומתים למוצר הזה, ולכן אין כאן גרף.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="bp-p-cmp" role="tabpanel" aria-labelledby="bp-t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות</th><th>שם הדגם בחנות</th><th>מחיר</th><th>משלוח ואחריות</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr class="best">
+            <td><a href="https://citysport.co.il/catalog.asp?page=newshowprod.asp&amp;prodid=1629097" target="_blank" rel="noopener">Citysport</a><br><span class="badge b-best">הזול ביותר</span></td>
+            <td>M7 Intelli IT<br><span class="badge b-q">גרסה לא ברורה</span></td><td class="num">₪549 <span class="note">(במקום 750)</span></td><td>אספקה עד 14 ימי עסקים · אחריות שנתיים</td><td class="final num">₪549+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.bteva.co.il/m7-intelli-it" target="_blank" rel="noopener">בי טבע</a></td>
+            <td>M7 Intelli IT, "מראה הפרעות קצב"</td><td class="num">₪627</td><td>לא צוין</td><td class="final num">₪627+</td>
+          </tr>
+          <tr>
+            <td><a href="https://xmed.co.il/product/%D7%9E%D7%93-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%9C%D7%96%D7%A8%D7%95%D7%A2-%D7%A2%D7%9D-%D7%96%D7%99%D7%94%D7%95%D7%99-%D7%A4%D7%A8%D7%A4%D7%95%D7%A8-%D7%A4%D7%A8%D7%95%D7%96%D7%93%D7%95%D7%A8%D7%99/" target="_blank" rel="noopener">Xmed</a><br><span class="badge b-q">הדף עודכן לפני כ־4 חודשים</span></td>
+            <td>M7 Intelli IT <b>AFIB</b></td><td class="num">₪631</td><td>לא צוין</td><td class="final num">₪631+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.bari-p2.co.il/%D7%9E%D7%9B%D7%A9%D7%99%D7%A8-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%91%D7%99%D7%AA%D7%99-OMRON-M7-Intelli-IT-7722" target="_blank" rel="noopener">העיקר הבריאות</a></td>
+            <td>M7 Intelli IT</td><td class="num">₪639</td><td>אספקה עד 7 ימי עסקים · עד 3 תשלומים</td><td class="final num">₪639+</td>
+          </tr>
+          <tr>
+            <td><a href="https://stethoscope.co.il/product/%D7%9E%D7%93-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%90%D7%95%D7%9E%D7%A8%D7%95%D7%9F-m7-intelli-it/" target="_blank" rel="noopener">סטטוסקופ</a></td>
+            <td>M7 Intelli IT</td><td class="num">לא זמין</td><td>לא צוין</td><td class="final">לא זמין</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח. מחירים מתוצאות חיפוש מ־9.11.2026. לא מצאתי קופונים פעילים. ייתכן שבסופר־פארם או בקופות החולים יש מחיר אחר. לא מצאתי מחיר מאומת שם.</p>
+  </section>
+
+  <section class="panel" id="bp-p-fine" role="tabpanel" aria-labelledby="bp-t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>לפי Omron, דיוק מדידת לחץ הדם במכשירים שלה אומת קלינית ורשום ב־STRIDE BP, מאגר אימות בלתי תלוי.</li>
+          <li>בגרסת ה־AFib, בדיקת פרפור פרוזדורים נעשית אוטומטית בכל מדידה.</li>
+          <li>שרוול Intelli Wrap ל־22–42 ס"מ, פחות רגיש למיקום לא מדויק.</li>
+          <li>Bluetooth לאפליקציית OMRON connect, ושני משתמשים נפרדים.</li>
+          <li>ב־Citysport: אחריות שנתיים.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>שתי גרסאות באותו שם:</b> HEM-7380T1 (‏AFib אוטומטי בכל מדידה) ו־HEM-7361T (‏AFib רק בשלוש מדידות רצופות). חלק מהחנויות כותבות רק "M7 Intelli IT". שאלו את החנות את מספר הדגם המלא.</li>
+          <li><b>זיהוי הדגם מהצילום:</b> מבוסס על הלוגו והכפתורים. את מספר הדגם המדויק אפשר לראות על המדבקה בתחתית המכשיר.</li>
+          <li><b>זיהוי AFib הוא סינון, לא אבחנה:</b> התראה מהמכשיר היא סיבה לפנות לרופא, לא אבחנה.</li>
+          <li>המחיר "המקורי" 750 ₪ ב־Citysport גבוה מכל מחיר אחר שמצאתי, כך שה"הנחה" שם מוגזמת.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>נתוני הדיוק של זיהוי AFib (כ־94–96%) מגיעים מהיצרן ומחנות. לא מצאתי אימות בלתי תלוי.</li>
+          <li>משתמשים מדווחים שקשה לפעמים להדק את השרוול מספיק, ואז המכשיר מציג הודעות שגיאה.</li>
+          <li>בחו"ל המחיר נמוך יותר (בבריטניה מ־£84), אבל עם משלוח, מכס ובלי אחריות מקומית הפער מצטמצם.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>הצילום ששלחת</li>
+      <li><a href="https://www.omron-healthcare.com/products/m7-intelli-it-afib" target="_blank" rel="noopener">Omron: M7 Intelli IT AFib</a></li>
+      <li><a href="https://citysport.co.il/catalog.asp?page=newshowprod.asp&amp;prodid=1629097" target="_blank" rel="noopener">Citysport</a></li>
+      <li><a href="https://www.bteva.co.il/m7-intelli-it" target="_blank" rel="noopener">בי טבע</a></li>
+      <li><a href="https://xmed.co.il/product/%D7%9E%D7%93-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%9C%D7%96%D7%A8%D7%95%D7%A2-%D7%A2%D7%9D-%D7%96%D7%99%D7%94%D7%95%D7%99-%D7%A4%D7%A8%D7%A4%D7%95%D7%A8-%D7%A4%D7%A8%D7%95%D7%96%D7%93%D7%95%D7%A8%D7%99/" target="_blank" rel="noopener">Xmed</a></li>
+      <li><a href="https://www.bari-p2.co.il/%D7%9E%D7%9B%D7%A9%D7%99%D7%A8-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%91%D7%99%D7%AA%D7%99-OMRON-M7-Intelli-IT-7722" target="_blank" rel="noopener">העיקר הבריאות</a></li>
+      <li><a href="https://stethoscope.co.il/product/%D7%9E%D7%93-%D7%9C%D7%97%D7%A5-%D7%93%D7%9D-%D7%90%D7%95%D7%9E%D7%A8%D7%95%D7%9F-m7-intelli-it/" target="_blank" rel="noopener">סטטוסקופ</a></li>
+      <li><a href="https://www.wms.co.uk/Equipment/Blood-Pressure-Monitors/Digital/OMRON-M7-Intelli-IT-AFib-Upper-Arm-Blood-Pressure-Monitor/p/W268584" target="_blank" rel="noopener">WMS (בריטניה): נתוני דיוק AFib</a></li>
+      <li><a href="https://www.superdrug.com/health/health-monitors/blood-pressure-monitors/omron-m7-intelli-it-upper-arm-blood-pressure-monitor/p/mp-00014053" target="_blank" rel="noopener">Superdrug (בריטניה)</a></li>
+    </ol>
+  </footer>
   </div>
 
   <div class="dealview" id="deal-boost">
