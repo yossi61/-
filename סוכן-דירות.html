@@ -304,7 +304,7 @@ dd.unk{color:var(--muted);font-weight:400;font-style:italic}
     if (l.phone){
       contact += '<span>' + esc(l.contactName || 'איש קשר') + ':</span><span class="phone">' + esc(l.phone) + '</span><button type="button" data-copy="' + esc(l.phone) + '">העתק</button>';
     } else {
-      contact += '<span class="note">טלפון: מוצג רק במודעה עצמה (לחיצה על "הצג מספר")</span>';
+      contact += (l.contactName ? '<span>איש קשר: <b>' + esc(l.contactName) + '</b></span>' : '') + '<span class="note">טלפון: מוצג רק במודעה עצמה (לחיצה על "הצג מספר")</span>';
     }
     contact += '</div>';
     const mark = l.mark || '';
