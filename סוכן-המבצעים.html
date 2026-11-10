@@ -148,6 +148,15 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </header>
 
   <div class="switch" role="group" aria-label="בחירת מבצע">
+    <div class="sw-item" data-item="deal-tommy">
+      <button type="button" class="sw-pick" data-deal="deal-tommy" aria-pressed="false"><span class="sw-name">זוג חולצות Tommy Hilfiger</span><span class="sw-meta num">₪99 · 7/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-tommy" aria-label="מחיקת זוג חולצות Tommy Hilfiger" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-tommy">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
     <div class="sw-item" data-item="deal-mouse">
       <button type="button" class="sw-pick" data-deal="deal-mouse" aria-pressed="false"><span class="sw-name">עכבר Logitech MX Master 2S</span><span class="sw-meta num">חלופה מ־₪279 · 3/10</span></button>
       <button type="button" class="sw-del" data-del="deal-mouse" aria-label="מחיקת עכבר Logitech MX Master 2S" title="מחיקה">✕</button>
@@ -192,6 +201,140 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   <div class="empty" id="empty" hidden>
     <h2>אין מוצרים ברשימה</h2>
     <p>מחקת את כל המוצרים שנבדקו. אפשר לשחזר אותם בכפתור שלמעלה, או לשלוח לי מבצע חדש לבדיקה.</p>
+  </div>
+
+  <div class="dealview" id="deal-tommy" hidden>
+  <div class="product">
+    <div>
+      <h2>זוג חולצות טי שרט Tommy Hilfiger לגברים</h2>
+      <div class="meta">"ההטבה היומית" · מבצע Black November · 100% כותנה, צווארון עגול, לוגו · מגוון צבעים · המחיר בתוקף 3–7 ימים מהפרסום (לפי המודעה)</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪99</div>
+      <div class="was">₪198</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="th-t-rec" aria-controls="th-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="th-t-cmp" aria-controls="th-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="th-t-fine" aria-controls="th-p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <section class="panel" id="th-p-rec" role="tabpanel" aria-labelledby="th-t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות 7 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--lime)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="79.2"/>
+        </svg>
+        <div class="score"><div><b class="num">7</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill">לקנות, אחרי בדיקת המוכר ✓</div>
+        <p>‏99 ₪ לזוג הוא <b>המחיר הנמוך ביותר שמצאתי בישראל</b>. בנקסט נמכר זוג חולצות טי של Tommy Hilfiger לגברים ב־163 ₪, וחולצה בודדת בפלטין עולה כ־150 ₪. ההנחה האמיתית קטנה ממה שמוצג (המחיר "המקורי" 198 ₪ גבוה מהמחיר בנקסט), אבל זה עדיין מחיר טוב. לפני התשלום ודאו שאתם באתר הרשמי של המבצע, ושאלו מאיזו סדרה החולצות.</p>
+        <div class="alts"><span>לחפש חלופה: לא נדרש</span><span>להמתין: המחיר בתוקף רק כמה ימים</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון מול נקסט</div><div class="v c-lime num">₪64</div><div class="s">כ־39% פחות מ־163 ₪</div></div>
+      <div class="stat"><div class="k">מחיר לחולצה</div><div class="v c-cyan num">₪49.5</div><div class="s">חולצה בודדת בפלטין: כ־150 ₪</div></div>
+      <div class="stat"><div class="k">ה"הנחה" שהמודעה מציגה</div><div class="v c-amber num">₪99</div><div class="s">מול 198 ₪, גבוה מהמחיר בנקסט</div></div>
+    </div>
+
+    <div class="box">
+      <h3>איפה 99 ₪ נמצא בטווח המחירים</h3>
+      <p class="note" style="margin:0">מחירי זוג חולצות טי של Tommy Hilfiger בחנויות בישראל:</p>
+      <div class="range" role="img" aria-label="טווח מחירים מ-138 עד 198 שקל, המבצע 99 שקל מתחת לטווח">
+        <!-- scale: 80 to 220 ILS mapped to 0-100% (LTR) -->
+        <div class="mark deal" style="left:13.6%"><span class="lbl up">המבצע ₪99</span></div>
+        <div class="mark" style="left:41.4%"><span class="lbl dn">זאפ ₪138</span></div>
+        <div class="mark" style="left:59.3%"><span class="lbl up">נקסט ₪163</span></div>
+        <div class="mark" style="left:84.3%"><span class="lbl dn">"מקורי" ₪198</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא מצאתי נתוני היסטוריית מחירים מאומתים, וגם לא יודעים בדיוק איזה דגם נמכר, ולכן אין כאן גרף.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="th-p-cmp" role="tabpanel" aria-labelledby="th-t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות</th><th>מוצר</th><th>מחיר</th><th>הערות</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr class="best">
+            <td><b>המבצע</b><br><span class="note">מתוך המודעה ששלחת</span><br><span class="badge b-best">הזול ביותר</span></td>
+            <td>זוג חולצות טי לגברים</td><td class="num">₪99</td><td>משלוח לא צוין במודעה</td><td class="final num">₪99+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.next.co.il/he/brands/tommy-hilfiger" target="_blank" rel="noopener">נקסט</a></td>
+            <td>זוג חולצות טי לגברים, צווארון עגול עם לוגו</td><td class="num">₪163</td><td>לבן/קורל, תכלת, ירוק</td><td class="final num">₪163+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.zap.co.il/models.aspx?sog=p-shirt&amp;db1477761=9066767&amp;pageinfo=4" target="_blank" rel="noopener">זאפ</a><br><span class="badge b-q">לנשים</span></td>
+            <td>מארזי 2 חולצות</td><td class="num">₪138–203</td><td>ההצעות שראיתי מסומנות לנשים</td><td class="final num">מ־₪138</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.platinexpress.co.il/collections/brands-tommy-hilfiger-tommy-hilfiger-shirts-by-platin" target="_blank" rel="noopener">פלטין</a></td>
+            <td>חולצת טי <b>בודדת</b> לגברים</td><td class="num">כ־₪150</td><td>זוג לנשים ב־199 ₪</td><td class="final num">כ־₪300 לזוג</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.boozt.com/eu/en/tommy-hilfiger-underwear/2-pk-ss-tee_32807470" target="_blank" rel="noopener">Boozt (אירופה)</a></td>
+            <td>2 Pk SS Tee</td><td class="num">€22.69</td><td>במקום €34.90 · משלוח לישראל לא נבדק</td><td class="final">להשוואה בלבד</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח. מחירים מתוצאות חיפוש מ־10.11.2026. לא מצאתי קופונים פעילים.</p>
+  </section>
+
+  <section class="panel" id="th-p-fine" role="tabpanel" aria-labelledby="th-t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>המחיר הנמוך ביותר שמצאתי בישראל לזוג חולצות של המותג: 49.5 ₪ לחולצה.</li>
+          <li>100% כותנה, צבעים בסיסיים שמתאימים לכל דבר (לפי המודעה).</li>
+          <li>מבחר צבעים לבחירה.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>ודאו את המוכר:</b> לא מצאתי אישור רשמי למבצע "ההטבה היומית" באתרי בזק. מותג מפורסם בחצי מחיר שמגיע בהודעה הוא שיטה נפוצה של אתרים מזויפים. היכנסו לאתר ההטבות דרך הכתובת הרשמית, ולא דרך קישור בהודעה.</li>
+          <li><b>"התמונה להמחשה בלבד":</b> כך כתוב במודעה. לא מצוין דגם או מק"ט, ולכן לא ברור אם אלה חולצות הלוגו הרגילות או חולצות מסדרת הבסיס (Underwear/Lounge), שבדרך כלל זולות יותר.</li>
+          <li><b>המחיר "המקורי" 198 ₪ מנופח:</b> בנקסט זוג דומה עולה 163 ₪.</li>
+          <li><b>תוקף קצר:</b> המחיר בתוקף 3–7 ימים מהפרסום ועשוי להשתנות.</li>
+          <li><b>משלוח והחזרות:</b> לא מצוינים במודעה. בבגדים כדאי לבדוק מראש אפשרות להחליף מידה.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>באירופה מארז דומה נמכר ב־€22.69 בבוזט, כך שהמחיר טוב לישראל אבל לא יוצא דופן בעולם.</li>
+          <li>לא מצאתי ביקורות על המוצר הספציפי, כי הדגם לא ידוע.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>מודעת המבצע (צילום מסך שנשלח)</li>
+      <li><a href="https://www.next.co.il/he/brands/tommy-hilfiger" target="_blank" rel="noopener">נקסט: Tommy Hilfiger</a></li>
+      <li><a href="https://www.zap.co.il/models.aspx?sog=p-shirt&amp;db1477761=9066767&amp;pageinfo=4" target="_blank" rel="noopener">זאפ: חולצות Tommy Hilfiger</a></li>
+      <li><a href="https://www.platinexpress.co.il/collections/brands-tommy-hilfiger-tommy-hilfiger-shirts-by-platin" target="_blank" rel="noopener">פלטין: חולצות Tommy Hilfiger</a></li>
+      <li><a href="https://www.boozt.com/eu/en/tommy-hilfiger-underwear/2-pk-ss-tee_32807470" target="_blank" rel="noopener">Boozt: ‏2 Pk SS Tee</a></li>
+      <li><a href="https://bezeq.style.co.il/" target="_blank" rel="noopener">אתר ההטבות של בזק</a></li>
+    </ol>
+  </footer>
   </div>
 
   <div class="dealview" id="deal-mouse" hidden>
