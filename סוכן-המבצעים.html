@@ -148,6 +148,15 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   </header>
 
   <div class="switch" role="group" aria-label="בחירת מבצע">
+    <div class="sw-item" data-item="deal-kerastase">
+      <button type="button" class="sw-pick" data-deal="deal-kerastase" aria-pressed="false"><span class="sw-name">Kérastase Stimuliste</span><span class="sw-meta num">מ־₪230 · 7/10</span></button>
+      <button type="button" class="sw-del" data-del="deal-kerastase" aria-label="מחיקת Kérastase Stimuliste" title="מחיקה">✕</button>
+      <div class="sw-confirm" hidden>
+        <span>למחוק את המוצר?</span>
+        <button type="button" class="yes" data-yes="deal-kerastase">מחיקה</button>
+        <button type="button" class="no">ביטול</button>
+      </div>
+    </div>
     <div class="sw-item" data-item="deal-tommy">
       <button type="button" class="sw-pick" data-deal="deal-tommy" aria-pressed="false"><span class="sw-name">זוג חולצות Tommy Hilfiger</span><span class="sw-meta num">₪99 · 7/10</span></button>
       <button type="button" class="sw-del" data-del="deal-tommy" aria-label="מחיקת זוג חולצות Tommy Hilfiger" title="מחיקה">✕</button>
@@ -201,6 +210,155 @@ tr.best td{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
   <div class="empty" id="empty" hidden>
     <h2>אין מוצרים ברשימה</h2>
     <p>מחקת את כל המוצרים שנבדקו. אפשר לשחזר אותם בכפתור שלמעלה, או לשלוח לי מבצע חדש לבדיקה.</p>
+  </div>
+
+  <div class="dealview" id="deal-kerastase" hidden>
+  <div class="product">
+    <div>
+      <h2>Kérastase Specifique Stimuliste, ‏125 מ"ל</h2>
+      <div class="meta">זוהה מהצילום: ספריי נגד נשירה ללא שטיפה עם Aminexil (‏15,000 PPM) · אין מבצע, חיפוש המחיר הטוב ביותר</div>
+    </div>
+    <div class="pricebox">
+      <div class="now num">₪230</div>
+      <div class="was" style="text-decoration:none">הזול ביותר שזמין, כולל משלוח</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="אזורי הבדיקה">
+    <button role="tab" id="ks-t-rec" aria-controls="ks-p-rec" aria-selected="true">המלצה</button>
+    <button role="tab" id="ks-t-cmp" aria-controls="ks-p-cmp" aria-selected="false">השוואת מחירים</button>
+    <button role="tab" id="ks-t-fine" aria-controls="ks-p-fine" aria-selected="false">האותיות הקטנות</button>
+  </nav>
+
+  <section class="panel" id="ks-p-rec" role="tabpanel" aria-labelledby="ks-t-rec">
+    <div class="verdict">
+      <div class="gauge" aria-label="ציון כדאיות 7 מתוך 10">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+          <circle class="val" cx="50" cy="50" r="42" fill="none" stroke="var(--cyan)" stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="263.9" stroke-dashoffset="79.2"/>
+        </svg>
+        <div class="score"><div><b class="num" style="color:var(--cyan)">7</b><small>מתוך 10</small></div></div>
+      </div>
+      <div>
+        <div class="tag" style="margin-bottom:8px">ההמלצה</div>
+        <div class="pill" style="background:var(--cyan)">לקנות דרך זאפ, מ־230 ₪</div>
+        <p>המחיר הזול ביותר שמצאתי זמין להזמנה הוא <b>230 ₪ כולל משלוח</b> בהשוואת המחירים של זאפ (שלוש חנויות, 230–244 ₪). ב<b>רד סטאר</b> המחיר נמוך יותר, <b>219.90 ₪</b>, ובדף מופיע גם באנר של 199 ₪ עם משלוח חינם, אבל המוצר מסומן שם כ"אזל". אם לא דחוף, כדאי לבדוק אם חזר למלאי. בשאר החנויות המחיר 240–250 ₪.</p>
+        <div class="alts"><span>אם חזר למלאי: רד סטאר ב־219.90 ₪</span><span>רשתות (סופר־פארם): לא מצאתי מחיר מאומת</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">חיסכון מול המחיר הנפוץ</div><div class="v c-lime num">₪20</div><div class="s">230 ₪ מול 250 ₪ ברוב החנויות</div></div>
+      <div class="stat"><div class="k">רד סטאר (אזל כרגע)</div><div class="v c-cyan num">₪219.90</div><div class="s">במקום 249.90 ₪</div></div>
+      <div class="stat"><div class="k">בחו"ל (להשוואה בלבד)</div><div class="v c-amber num">£44.56</div><div class="s">LookFantastic בבריטניה, לפני משלוח</div></div>
+    </div>
+
+    <div class="box">
+      <h3>טווח המחירים בישראל</h3>
+      <div class="range" role="img" aria-label="טווח מחירים מ-219.90 עד 250 שקל">
+        <!-- scale: 190 to 260 ILS mapped to 0-100% (LTR) -->
+        <div class="mark" style="left:42.7%"><span class="lbl dn">רד סטאר ₪219.90 (אזל)</span></div>
+        <div class="mark deal" style="left:57.1%"><span class="lbl up">זאפ ₪230</span></div>
+        <div class="mark" style="left:71.4%"><span class="lbl dn">₪240</span></div>
+        <div class="mark" style="left:85.7%"><span class="lbl up">₪250</span></div>
+      </div>
+      <h3 style="margin-top:8px">היסטוריית מחירים (3–6 חודשים)</h3>
+      <div class="na">
+        <b>לא זמין</b>
+        <div>לא הצלחתי לקרוא את גרף המחירים בזאפ, ולכן אין כאן גרף. אפשר לבדוק אותו <a href="https://www.zap.co.il/model.aspx?modelid=1018713" target="_blank" rel="noopener">בדף המוצר בזאפ</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="ks-p-cmp" role="tabpanel" aria-labelledby="ks-t-cmp" hidden>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>חנות</th><th>מחיר</th><th>הערות</th><th>מחיר סופי</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.redstar.co.il/products/%D7%A1%D7%A4%D7%A8%D7%99%D7%99-%D7%A1%D7%98%D7%99%D7%9E%D7%95%D7%9C%D7%99%D7%A1%D7%98-%D7%9E%D7%90%D7%99%D7%A5-%D7%A6%D7%9E%D7%99%D7%97%D7%94-%D7%95%D7%9E%D7%A4%D7%97%D7%99%D7%AA-%D7%90%D7%AA-%D7%A0%D7%A9%D7%99%D7%A8%D7%AA-%D7%94%D7%A9%D7%99%D7%A2%D7%A8-%D7%9E%D7%A1%D7%93%D7%A8%D7%AA-%D7%A1%D7%A4%D7%A1%D7%99%D7%A4%D7%99%D7%A7-125-%D7%9E%D7%9C-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1" target="_blank" rel="noopener">רד סטאר</a><br><span class="badge b-q">אזל</span></td>
+            <td class="num">₪219.90 <span class="note">(במקום 249.90)</span></td><td>באנר: 199 ₪ עם משלוח חינם</td><td class="final num">₪219.90</td>
+          </tr>
+          <tr class="best">
+            <td><a href="https://www.zap.co.il/model.aspx?modelid=1018713" target="_blank" rel="noopener">זאפ (3 חנויות)</a><br><span class="badge b-best">הזול ביותר שזמין</span></td>
+            <td class="num">₪230–244</td><td>כולל משלוח 30 ₪</td><td class="final num">₪230</td>
+          </tr>
+          <tr>
+            <td><a href="https://philnjoe.com/en/collections/specifique" target="_blank" rel="noopener">Phil &amp; Joe</a></td>
+            <td class="num">₪239.90</td><td>מחיר מבצע</td><td class="final num">₪239.90+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.lashantel.co.il/product-category/%D7%A1%D7%A4%D7%A1%D7%99%D7%A4%D7%99%D7%A7-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1-specifique/" target="_blank" rel="noopener">לשנטל</a></td>
+            <td class="num">₪240</td><td>משלוח לא צוין</td><td class="final num">₪240+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.all4hair.co.il/118343-Kerastase-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1/186665" target="_blank" rel="noopener">All4hair</a></td>
+            <td class="num">₪249 <span class="note">(במקום 329)</span></td><td>משלוח לא צוין</td><td class="final num">₪249+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.dealcosmetics.co.il/products/kerastase-specifique-stimuliste-125ml" target="_blank" rel="noopener">דיל קוסמטיקס</a><br><span class="badge b-q">דף מלפני כ־7 חודשים</span></td>
+            <td class="num">₪249.90</td><td>משלוח לא צוין</td><td class="final num">₪249.90+</td>
+          </tr>
+          <tr>
+            <td><a href="https://adi-ashkenazi.co.il/product/stimuliste-kerastase-%D7%A1%D7%98%D7%99%D7%9E%D7%95%D7%9C%D7%99%D7%A1%D7%98-%D7%9E%D7%9C-125/" target="_blank" rel="noopener">עדי אשכנזי</a></td>
+            <td class="num">₪250</td><td>משלוח לא צוין</td><td class="final num">₪250+</td>
+          </tr>
+          <tr>
+            <td>סופר־פארם</td>
+            <td>לא זמין</td><td>מוכרים מוצרי Kérastase, אבל לא מצאתי מחיר ל־Stimuliste</td><td class="final">לא זמין</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin:0">"+" פירושו שלא ידוע אם יש עלות משלוח. מחירים מתוצאות חיפוש מ־11.11.2026. בחו"ל: LookFantastic ‏£44.56, ‏Keshop ‏€50.50, לפני משלוח ומכס.</p>
+  </section>
+
+  <section class="panel" id="ks-p-fine" role="tabpanel" aria-labelledby="ks-t-fine" hidden>
+    <div class="fp">
+      <section class="good">
+        <h3><span class="ico" aria-hidden="true">+</span>מה טוב</h3>
+        <ul>
+          <li>הפער בין החנויות קטן (230–250 ₪), כך שגם במחיר הרגיל לא משלמים הרבה יותר.</li>
+          <li>בזאפ המחיר כבר כולל משלוח.</li>
+          <li>נמכר בהרבה חנויות מקוונות, כך שאפשר לחכות למבצע.</li>
+        </ul>
+      </section>
+      <section class="warn">
+        <h3><span class="ico" aria-hidden="true">!</span>לשים לב</h3>
+        <ul>
+          <li><b>יש שני מוצרים בשם "סטימוליסט":</b> הספריי שבצילום (Specifique Stimuliste, ‏125 מ"ל) וסרום אחר שנמכר בכ־215 ₪. ודאו שמזמינים את הספריי.</li>
+          <li><b>הגודל:</b> בלשנטל מופיע גם דף של 250 מ"ל. השוו מחיר לפי אותו גודל.</li>
+          <li><b>199 ₪ ברד סטאר</b> מופיע רק כבאנר, והמוצר אזל. ייתכן שהוא תלוי בתנאים.</li>
+          <li>חלק מהדפים ישנים, והמחירים בהם עשויים להשתנות.</li>
+        </ul>
+      </section>
+      <section class="bad">
+        <h3><span class="ico" aria-hidden="true">−</span>מה פחות טוב</h3>
+        <ul>
+          <li>לא מצאתי מחיר מאומת ברשתות הפארם (סופר־פארם, בי), ולכן ההשוואה מבוססת על חנויות מקוונות בלבד.</li>
+          <li>בחו"ל המחיר נמוך יותר (בבריטניה כ־£45), אבל משלוח ומכס מקטינים את הפער.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <b>מקורות</b>
+    <ol>
+      <li>הצילום ששלחת</li>
+      <li><a href="https://www.zap.co.il/model.aspx?modelid=1018713" target="_blank" rel="noopener">זאפ: ספסיפיק סטימוליסט 125 מ"ל</a></li>
+      <li><a href="https://www.redstar.co.il/products/%D7%A1%D7%A4%D7%A8%D7%99%D7%99-%D7%A1%D7%98%D7%99%D7%9E%D7%95%D7%9C%D7%99%D7%A1%D7%98-%D7%9E%D7%90%D7%99%D7%A5-%D7%A6%D7%9E%D7%99%D7%97%D7%94-%D7%95%D7%9E%D7%A4%D7%97%D7%99%D7%AA-%D7%90%D7%AA-%D7%A0%D7%A9%D7%99%D7%A8%D7%AA-%D7%94%D7%A9%D7%99%D7%A2%D7%A8-%D7%9E%D7%A1%D7%93%D7%A8%D7%AA-%D7%A1%D7%A4%D7%A1%D7%99%D7%A4%D7%99%D7%A7-125-%D7%9E%D7%9C-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1" target="_blank" rel="noopener">רד סטאר</a></li>
+      <li><a href="https://philnjoe.com/en/collections/specifique" target="_blank" rel="noopener">Phil &amp; Joe</a></li>
+      <li><a href="https://www.lashantel.co.il/product-category/%D7%A1%D7%A4%D7%A1%D7%99%D7%A4%D7%99%D7%A7-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1-specifique/" target="_blank" rel="noopener">לשנטל</a></li>
+      <li><a href="https://www.all4hair.co.il/118343-Kerastase-%D7%A7%D7%A8%D7%A1%D7%98%D7%A1/186665" target="_blank" rel="noopener">All4hair</a></li>
+      <li><a href="https://www.dealcosmetics.co.il/products/kerastase-specifique-stimuliste-125ml" target="_blank" rel="noopener">דיל קוסמטיקס</a></li>
+      <li><a href="https://adi-ashkenazi.co.il/product/stimuliste-kerastase-%D7%A1%D7%98%D7%99%D7%9E%D7%95%D7%9C%D7%99%D7%A1%D7%98-%D7%9E%D7%9C-125/" target="_blank" rel="noopener">עדי אשכנזי</a></li>
+      <li><a href="https://www.2hair.co.il/collections/mens-grooming/products/125anti-hair-loss-serum-stimulist-kerastase-125-ml" target="_blank" rel="noopener">2Hair: סרום סטימוליסט (מוצר אחר)</a></li>
+      <li><a href="https://www.lookfantastic.com/p/kerastase-specifique-stimuliste-hair-thickener-125ml/11309657" target="_blank" rel="noopener">LookFantastic (בריטניה)</a></li>
+      <li><a href="https://keshop.com/es/en/kerastase-specifique/stimuliste.html" target="_blank" rel="noopener">Keshop (ספרד)</a></li>
+    </ol>
+  </footer>
   </div>
 
   <div class="dealview" id="deal-tommy" hidden>
